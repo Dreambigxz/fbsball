@@ -300,3 +300,8 @@ img.away-t-shirt {
 img.home-t-shirt {
     filter: grayscale(1);
 }
+
+.auth-logo {
+    justify-content: center;
+    display: flex;
+}
