@@ -1,0 +1,96 @@
+
+
+.wallet {
+  /* max-width: 460px; */
+  /* width: auto; */
+  margin: 0 auto;
+}
+
+.method-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: center;
+}
+
+.method-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 80px;
+  transition: all 0.25s ease;
+  background: rgb(22, 13, 35);
+  color: #333;
+}
+
+.method-btn i,
+.method-btn img {
+  font-size: 1.6rem;
+  margin-bottom: 4px;
+}
+
+.method-btn span {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.method-btn.active {
+  background: #d97f02;
+  color: #fff;
+  border-color: rgb(22, 13, 35);
+}
+
+.method-btn.active img {
+  filter: brightness(0) invert(1);
+}
+
+.icon-img {
+  width: 24px;
+  height: 24px;
+}
+
+.card {
+  background: rgb(22 13 35 / 80%);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 30px 15px 15px 15px !important;
+  /* max-width: 600px; */
+}
+
+.wallet-address {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f4f4f4;
+  padding: 0.6rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  font-family: monospace;
+}
+
+.copy-btn {
+  border: none;
+  color: #fff;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.copy-btn:hover {
+  background: #0056b3;
+}
+.crypto-section{
+}
+
+.crypto-select{
+  display: flex;
+}

@@ -1,0 +1,86 @@
+<app-header2></app-header2>
+<app-spinner></app-spinner>
+
+<div class="space-top container-fluid">
+
+    <div class="search-container mb-12 border">
+    <input
+      type="text"
+      [(ngModel)]="matchService.searchTerm"
+      (input)="matchService.search()"
+
+
+      placeholder="Search by ID, Team, League, or Country"
+    />
+  </div>
+
+  <!-- <div class="match-list">
+    <div *ngFor="let match of matchService.fixtures" class="match-card">
+      <h3>{{ match.team1 }} vs {{ match.team2 }}</h3>
+      <p><strong>League:</strong> {{ match.league }}</p>
+      <p><strong>Country:</strong> {{ match.country }}</p>
+      <p><strong>Start:</strong> {{ match.startDate | date:'short' }}</p>
+    </div>
+
+  <p *ngIf="matchService.notStarted.length === 0" class="no-results">No matches found.</p>
+</div> -->
+
+
+  <div *ngIf="matchService.notStartedMatches as matches" class="hero_area__topslider ">
+    <div
+      *ngFor="let i of matches; let in = index"
+        class="hero_area__topslider-card swiper-slide p-4 p-md-6  matches-display"
+        (click)="router.navigate(['/betinfo/'+i.fixtureID])"
+        >
+
+        <div class="">
+          <div
+              class="hero_area__topslider-cardtop d-flex align-items-center justify-content-between mb-4 mb-md-6">
+              <div class="d-flex align-items-center gap-2">
+                  <i class="ti ti-ball-football n5-color"></i>
+                  <span class="fs-seven n5-color cpoint">{{i.fixture.league.name|truncateCenter:4}}</span>
+              </div>
+              <span class="fs-seven n5-color cpoint">{{i.fixture.fixture.timestamp|timeFormat:"fullDate"}}</span>
+          </div>
+          <div
+              class="hero_area__topslider-cardbody d-flex align-items-center justify-content-between mb-4 mb-md-6">
+              <div class="hero_area__topslider-flag">
+                  <div class="hero_area__topslider-flagbox mb-2">
+                      <img src="{{i.fixture.teams.home.logo}}" alt="icon">
+                  </div>
+                  <h6 class="cpoint">{{i.fixture.teams.home.name}}</h6>
+              </div>
+              <div class="hero_area__topslider-vs">
+                  <span class="fw-bold n5-color">VS</span>
+              </div>
+              <div
+                  class="hero_area__topslider-flag text-end d-flex flex-column justify-content-end align-items-end ">
+                  <div class="hero_area__topslider-flagbox mb-2">
+                      <img src="{{i.fixture.teams.away.logo}}" alt="icon">
+                  </div>
+                  <h6 class="cpoint">{{i.fixture.teams.away.name}}</h6>
+              </div>
+          </div>
+
+        </div>
+
+    </div>
+
+
+  </div>
+
+  <div *ngIf="!notStarted.length" class="empty-state">
+    <div class="no-data text-center">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/595/595067.png"
+        width="60"
+        alt="no data"
+      />
+      <p>No data found.</p>
+
+    </div>
+  </div>
+
+</div>
+
+<app-menu-bottom></app-menu-bottom>

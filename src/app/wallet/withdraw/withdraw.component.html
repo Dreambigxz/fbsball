@@ -1,0 +1,185 @@
+<app-header2></app-header2>
+<app-spinner></app-spinner>
+
+
+<div class="space-top">
+  <section class="wallet container-fluid ">
+    <!-- <h3 class="text-center mb-4">withdraw Funds</h3> -->
+
+    <!-- 🔹 Payment Method Selector -->
+    <div class="method-select mb-4">
+
+      <div *ngIf="
+          (!storeData.store['withdraw']?.length && !storeData.store['hasMethod']) ||
+          (storeData.store['withdraw']?.length && walletService.paymentMode(storeData.store['withdraw'][0].method)==='crypto')||
+          walletService.paymentMode(storeData.store['savedMethod'])==='crypto'
+        "
+        class="crypto-select d-flex gap-4">
+        <div *ngIf="!storeData.store['withdraw']?.length||storeData.store['withdraw']?.length&&['USD'].includes(storeData.store['withdraw'][0].method)"
+          class="method-btn"
+          [class.active]="walletService.selectedMode === 'USD'"
+          (click)="walletService.setPaymentMode('USD')"
+        >
+          <img src="https://nowpayments.io/images/coins/usdt.svg" alt="USDT" class="icon-img" />
+          <span>USDT</span>
+        </div>
+
+        <div *ngIf="!storeData.store['withdraw']?.length||storeData.store['withdraw']?.length&&['TRON'].includes(storeData.store['withdraw'][0].method)"
+          class="method-btn"
+          [class.active]="walletService.selectedMode === 'TRON'"
+          (click)="walletService.setPaymentMode('TRON')"
+        >
+          <img src="https://nowpayments.io/images/coins/trx.svg" alt="TRON" class="icon-img" />
+          <span>TRX</span>
+        </div>
+
+      </div>
+        <div *ngIf="
+          (!storeData.store['withdraw']?.length && !storeData.store['hasMethod'])
+          ||(storeData.store['withdraw']?.length && !walletService.cryptoCoins.includes(storeData.store['withdraw'][0].method))
+           ||walletService.paymentMode(storeData.store['savedMethod']||'USD')==='bank'
+          "
+          class="method-btn"
+          [class.active]="walletService.selectedMode === 'BANK'"
+          (click)="walletService.setPaymentMode('BANK')"
+        >
+          <i class="ti ti-building-bank fs-five"></i>
+          <span>Bank</span>
+        </div>
+
+    </div>
+
+    <!-- 🔹 Bank withdraw Section -->
+    <!-- <div *ngIf="walletService.selectedMode === 'BANK' && storeData.store['withdraw']?.length" class="bank-section card p">
+        local_banks
+    </div> -->
+
+    <!-- 🔹 Crypto withdraw Section -->
+    <div *ngIf="(walletService.selectedMode === 'USD' || walletService.selectedMode === 'TRON' || walletService.selectedMode === 'BANK') && storeData.store['withdraw']?.length" class="crypto-section card p-3">
+
+      <div class="x-flex mb-5">
+        <h5>Pending withdrawal</h5>
+        <small (click)="walletService.cancelPayment('withdraw')" class="text-danger"> <i class="ti ti-trash fs-five"></i> Cancel</small>
+      </div>
+
+      <ul *ngIf="storeData.store['withdraw'][0] as tra" class="item-flex-list">
+        <li><span class="text-first">Amount:</span> <span>{{ tra.amount|currencyConverter:true:storeData.store['withdraw'][0].method }}</span></li>
+        <li><span class="text-first">Created at:</span><span>{{tra.timestamp|timeFormat:"fullDate"}}</span></li>
+        <li><span class="text-first">Expected receive:</span> <span class="text-deem"> {{tra.timestamp|countdown:storeData.store['wallet']?.settings.max_await_time.withdraw|async}} </span></li>
+      </ul>
+
+    </div>
+
+
+    <!-- 🔹 withdraw Form -->
+    <div class="card">
+      <form *ngIf="!storeData.store['withdraw']?.length" [formGroup]="walletService.methodView[walletService.activeForm].form" (ngSubmit)="walletService.handleSubmit(walletService.methodView[walletService.activeForm].form,'create_withdraw')">
+
+          <div *ngIf="walletService.selectedMode === 'BANK'" class="mb-3">
+              <label>Select currency</label>
+              <select
+                class="form-control arrow-down"
+                (change)="walletService.onCurrencySelect($event)"
+                formControlName='payment_method'
+                >
+                <option disabled="disabled" selected="selected" value="">Select</option>
+                <option *ngFor="let c of walletService.initCurrencies.slice(2)" [value]="c.code">
+                  {{ c.name }} ({{ c.symbol }})
+                </option>
+              </select>
+            </div>
+
+
+          <div *ngIf="walletService.selectedMode==='BANK'&& walletService.selectedCurrency||['USD','TRON'].includes(walletService.selectedMode)" class="withdraw-info">
+
+            <div class="input-container">
+              <label>Amount</label>
+              <input
+                type="number"
+                [(ngModel)]="amount"
+                placeholder="Min {{walletService.selectedCurrency?.symbol}}{{walletService.minimumPayment}}"
+                [min]="walletService.minimumPayment"
+                class="n11-bg mb-3"
+                formControlName="amount"
+              />
+            </div>
+
+            <div *ngIf="walletService.paymentMode(storeData.store['savedMethod']||walletService.selectedMode)==='crypto';else localBankDetailsBlock" class="crypto">
+              <div class="input-container">
+                <label>Address</label>
+
+                <input
+                  type="text"
+                  placeholder=" Wallet Address"
+                  class="n11-bg mb-3"
+                  formControlName="account_number"
+                />
+              </div>
+            </div>
+
+            <ng-template #localBankDetailsBlock>
+              <div class="input-container">
+                <label>Account number</label>
+                <input
+                  type="text"
+                  placeholder=" Account number"
+                  class="n11-bg mb-3"
+                  formControlName="account_number"
+                />
+              </div>
+              <div class="input-container">
+                <label>Account name</label>
+                <input
+                  type="text"
+                  placeholder=" Account Name"
+                  class="n11-bg mb-3"
+                  formControlName="account_holder"
+                />
+              </div>
+              <div class="input-container">
+                <label>Bank</label>
+                <input
+                  type="text"
+                  placeholder=" Bank name"
+                  class="n11-bg mb-3"
+                  formControlName="bank"
+                />
+              </div>
+            </ng-template>
+
+            <div class="input-container otp-container">
+                <label>OTP</label>
+
+                <div class="otp-input-wrapper otp-row">
+                  <input
+                    type="number"
+                    placeholder="Code"
+                    class="n11-bg"
+                    formControlName="verification_code"
+                  />
+
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary get-code-btn"
+                    [disabled]="walletService.isCountingDown"
+                    (click)="walletService.sendCode()"
+                  >
+                    <span *ngIf="!walletService.isCountingDown">Get Code</span>
+                    <span *ngIf="walletService.isCountingDown">{{ walletService.countdown }}s</span>
+                  </button>
+                </div>
+              </div>
+          </div>
+
+          <button
+            class="cmn-btn px-5 py-3 mb-6 w-100 mt-4"
+            [class.inactive-btn]="!walletService.methodView[walletService.activeForm].form.valid"
+            >
+            <i class="ti ti-wallet"></i> Send
+          </button>
+
+      </form>
+    </div>
+  </section>
+
+</div>

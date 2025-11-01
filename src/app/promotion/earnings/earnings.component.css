@@ -1,0 +1,184 @@
+affiliate-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background: rgb(22 13 35 / 80%);; /* light gray background for contrast */
+  min-height: 100vh;
+  border-radius: 12px;
+}
+
+.page-title {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #083a5d;
+}
+
+/* Referral Code */
+.referral-code-card {
+  background: linear-gradient(135deg, #d97f02 10%, #eec3b5 90%);
+  color: #fff;
+  border-radius: 10px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.referral-code-card p {
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.ref-code-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copy-btn {
+  background: #fff;
+  color: #eec3b5;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.copy-btn:hover {
+  background: #e9eef5;
+}
+
+/* Summary Cards */
+.summary-cards {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+
+
+.summary-card h4 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.summary-card p {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #d97f02;
+}
+
+/* Tabs */
+.tab-selector {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.tab-selector button {
+  flex: 1;
+  padding: 0.7rem;
+  border: 1px solid #eec3b5;
+  border-radius: 8px;
+  background: #f0f7ff;
+  color: #eec3b5;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tab-selector button.active {
+  background: #d97f02;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 120, 215, 0.3);
+}
+
+/* Section Cards */
+.section-card {
+  background: rgb(22 13 35 / 80%);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  border-left: 4px solid #d97f02;
+}
+
+.section-card h3 {
+  margin-bottom: 1rem;
+  color: #eec3b5;
+  font-size: 20px;
+}
+
+.gen-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.gen-card {
+  flex: 1 1 calc(33.333% - 1rem);
+  background: transparent;
+  border: 1px solid #e1ecfa;
+  border-radius: 8px;
+  padding: 0.8rem;
+}
+
+.gen-card h4 {
+  color: #8f98a1;
+  font-weight: 900;
+  font-size: 15px;
+}
+
+.total-line {
+  margin-top: 1rem;
+  border-top: 1px dashed #ccc;
+  padding-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.cash-summary {
+  text-align: center;
+  background: transparent;
+  border: 1px solid #c1e3ca;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .summary-card,
+  .gen-card {
+    flex: 1 1 100%;
+  }
+
+  .tab-selector {
+    flex-wrap: nowrap;
+  }
+
+}
+
+.table {
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgb(22 13 35 / 80%);
+  color: #fff;
+}
+
+.table th {
+  white-space: nowrap;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+}
+
+.inactive-count {
+    justify-content: center;
+    display: flex;
+    padding: 5px;
+    background: #1d1514;
+    width: 10%;
+    height: 10%;
+    color: red
+}

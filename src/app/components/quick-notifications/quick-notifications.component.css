@@ -1,0 +1,49 @@
+/* notification-box.component.css */
+.notification-box {
+  position: relative;
+  bottom: 10px;
+  /* margin-top: 50px; */
+  /* margin-right: 20px; */
+  width: 100%;
+  background: rgba(22 13 35, / 80);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  padding: 16px;
+  /* z-index: 1000; */
+  animation: fadeIn 0.6s ease-out;
+}
+
+.notification-box h4 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.notification-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-box li {
+  font-size: 14px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  color: #a4a0a0;
+  text-align: left;
+  animation: fadeIn 0.6s ease-out;
+
+
+}
+
+.notification-box li:last-child {
+  border-bottom: none;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(10px); }
+to { opacity: 1; transform: translateY(0); }
+}

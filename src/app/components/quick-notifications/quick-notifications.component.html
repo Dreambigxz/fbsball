@@ -1,0 +1,13 @@
+<div *ngIf="showNotifications" class="notification-box">
+<h4>🔔 Site Notifications</h4>
+
+
+<ul *ngIf="currentNotification; else noNotifications">
+<li>{{ currentNotification }}</li>
+</ul>
+
+
+<ng-template #noNotifications>
+<p>No notifications available.</p>
+</ng-template>
+</div>

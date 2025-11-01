@@ -1,0 +1,14 @@
+.table {
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgb(22 13 35 / 80%);
+  color: #fff;
+}
+
+.table th {
+  white-space: nowrap;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+}

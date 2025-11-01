@@ -1,0 +1,45 @@
+<app-spinner></app-spinner>
+
+<section class="login_section pt-120 p3-bg">
+    <div class="container-fluid">
+        <div class="row justify-content-between align-items-center">
+
+            <div class="col-lg-12 col-xl-12">
+                <div class="login_section__loginarea">
+                    <div class="row justify-content-start">
+                        <div class="col-xxl-10">
+                            <div class="pb-10 pt-8 mb-7 mt-12 mt-lg-0 px-4 px-sm-10">
+                                <h3 class="mb-6 mb-md-8">Create Portal</h3>
+                                <p class="mb-10 mb-md-15"></p>
+                                <div *ngIf="authService.formView['register'] as form" class="login_section__form">
+                                    <form [formGroup]="form" (ngSubmit)="authService.onSubmit(form,'register')">
+                                        <div class="mb-5 mb-md-6">
+                                            <input class="n11-bg"  placeholder="Username"
+                                                type="text" formControlName="username">
+                                        </div>
+                                        <div class="mb-5 mb-md-6">
+                                            <input class="n11-bg"  placeholder="Email"
+                                                type="email" formControlName="email">
+                                        </div>
+                                        <div *ngIf="authService.RefCode" class="mb-5 mb-md-6">
+                                            <input class="n11-bg"  placeholder="Invited by {{authService.invitedBy}}"
+                                                type="text" formControlName="RefCode" readonly>
+                                        </div>
+                                        <div class="mb-5 mb-md-6">
+                                            <input class="n11-bg" placeholder="Password"
+                                                type="password" formControlName="password">
+                                        </div>
+                                        <button [class.inactive-btn]="!form.valid" class="cmn-btn px-5 py-3 mb-6 w-100" type="submit">Sign Up Now</button>
+                                    </form>
+                                </div>
+
+                                <span class="d-center gap-1">Have Portal? <a class="g1-color" (click)="authService.router.navigate(['/login'])">Enter Now</a></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

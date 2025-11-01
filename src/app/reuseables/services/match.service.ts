@@ -1,0 +1,188 @@
+import { Injectable, inject } from '@angular/core';
+import { CurrencyConverterPipe } from '../pipes/currency-converter.pipe';
+import { StoreDataService } from '../http-loader/store-data.service';
+import { ConfirmationDialogService } from '../modals/confirmation-dialog/confirmation-dialog.service';
+import { RequestDataService } from '../http-loader/request-data.service';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MatchService {
+
+  private currencyConverter=inject(CurrencyConverterPipe)
+  storeData = inject(StoreDataService)
+  reqConfirmation = inject(ConfirmationDialogService)
+  reqServerData= inject(RequestDataService)
+
+  fixtures:any
+
+  addingFixture:any
+  possibleWin:any=0
+  stakeAmount:any=5
+  booking_link = ''
+  upcomingMatches:any=[]
+
+  searchTerm = '';
+  notStartedMatches:any=[]
+  filteredMatches$!: Promise<any[]>;
+
+  setFixtures(){
+
+    if (this.fixtures&&!this.storeData.get('nextDayData'))return
+    if (this.storeData.get('nextDayData')){
+      this.storeData.store['soccer'] = [...this.storeData.store['soccer'], ...this.storeData.store['nextDayData'] ]
+    }
+    this.fixtures=this.storeData.store['soccer']
+  }
+
+  async categorizeMatches(allMatches: any[], companyGames: any[] = []) {
+    const now = new Date();
+
+    const sortedData: { [key: string]: any[] } = {
+      secured: [],
+      notStarted: await this.notStarted(allMatches, now),
+      live: this.live(allMatches),
+      finished: this.finished(allMatches),
+    };
+
+    // Attach company games (secured)
+    companyGames.forEach((element: any) => {
+      const match = sortedData['notStarted'].find(
+        (m: any) => m.fixture.fixture.id == element.fixtureID
+      );
+      if (match) {
+        match['secured'] = true;
+        sortedData['secured'].push(match);
+      }
+    });
+
+    // Add upcoming (subset of notStarted)
+    sortedData['upcoming'] = sortedData['notStarted'].slice(0, 10);
+
+    return sortedData;
+  }
+
+  /** Matches that haven’t started yet */
+  async notStarted(matches: any=null, now: Date = new Date()) {
+    !matches?matches=this.fixtures:0;
+
+    this.notStartedMatches= matches
+      .filter((m: any) => new Date(m.fixture.fixture.timestamp*1000) > now)
+      .sort(
+        (a: any, b: any) =>
+          a.fixture.fixture.timestamp - b.fixture.fixture.timestamp
+      );
+      if (!this.notStartedMatches.length) {
+        await this.nextDayData()
+
+        console.log("loadedNEXTDAY");
+
+        this.notStartedMatches= matches
+          .filter((m: any) => new Date(m.fixture.fixture.timestamp*1000) > now)
+          .sort(
+            (a: any, b: any) =>
+              a.fixture.fixture.timestamp - b.fixture.fixture.timestamp
+          );
+      }
+
+      return this.notStartedMatches
+  }
+
+  /** Live matches (1H, 2H, HT) */
+  live(matches: any[]) {
+    return matches.filter((m: any) =>
+      ['HT', '2H', '1H'].includes(m.fixture.fixture.status.short)
+    );
+  }
+
+  /** Finished matches */
+  finished(matches: any[]) {
+    return matches.filter(
+      (m: any) => m.fixture.fixture.status.short === 'FT'
+    );
+  }
+
+  /** Upcoming (first 10 not started) */
+  async upcoming(matches: any=null, now: Date = new Date()) {
+
+    !matches?matches=this.fixtures:0;
+    let ns = await this.notStarted(matches, now)
+
+    return ns.slice(0, 10);
+  }
+
+  showBetSlip(fixture:any,selected:any){
+    let slipEle =document.querySelector(".fixed_footer")
+    slipEle?.classList.add('show')
+    fixture['selectedScore']=selected
+    this.addingFixture=fixture
+  }
+
+  stakeAmountHandler(event: KeyboardEvent) {
+    const input = event.target as HTMLInputElement;
+    this.stakeAmount = !input.value ? 0 : input.value;
+    this.setProfit()
+
+  }
+
+  setProfit(){
+    const totalProfit = (this.stakeAmount * this.addingFixture.selectedScore.odds / 100 ).toFixed(2)
+
+    this.possibleWin  = parseFloat(this.stakeAmount) + parseFloat(totalProfit)
+  }
+
+  stakeAll() {
+    this.stakeAmount = this.currencyConverter.transform(this.storeData.get('wallet')?.balance?.new);
+    this.setProfit()
+  }
+
+  slipHandler(processor:string){
+    const slipData = {
+      fixtureID:this.addingFixture.fixtureID,
+      stakeAmount:this.stakeAmount,
+      selectedScore:this.addingFixture.selectedScore,
+      processor:'place_bet',
+      startDate:new Date(this.addingFixture.fixture.fixture.timestamp*1000)
+    }
+
+
+    this.reqConfirmation.confirmAction(()=>{
+      this.reqServerData.post('bet/?showSpinner',{...slipData,processor}).subscribe({
+        next:res=>{
+
+          if (processor.includes('book')) {
+              this.booking_link = `${window.location.origin}/betslip/${this.addingFixture.id}`
+              console.log(this.booking_link);
+              // this.openModal("bookingLinkmodal")
+              alert(this.booking_link)
+
+          }
+      }
+    })
+  },'Place bet!', `Continue ${processor.split('_')[0].replace('e','')}ing bet with ${this.storeData.get('wallet').init_currency.symbol}${slipData.stakeAmount} ?`)
+
+  }
+
+  async nextDayData(run_func = true, func='not_started') {
+    const nextDayData:any = await this.reqServerData.get('soccer/?nextDayData=true').toPromise()
+    this.setFixtures()
+ }
+
+
+ async search() {
+
+   const term = this.searchTerm.toLowerCase()//this.searchTerm.toLowerCase();
+   const matches = await this.notStarted();
+
+   this.notStartedMatches = matches.filter((m:any) =>
+     m.fixtureID?.toString().includes(term) ||
+     m.fixture.teams.home.name?.toLowerCase().includes(term) ||
+     m.fixture.teams.away.name?.toLowerCase().includes(term) ||
+     m.fixture.league.namme?.toLowerCase().includes(term) ||
+     m.fixture.league.country?.toLowerCase().includes(term)
+   );
+}
+
+
+}

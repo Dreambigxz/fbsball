@@ -1,0 +1,7 @@
+<div class="title-area justify-content-between snipcss-84QUn">
+
+    <a (click)="goBack()" class="btn back-page-btn"><i class="ri-arrow-left-s-line"></i></a>
+    <h5  class="ps-4 header-title">{{pageName}}</h5>
+    <div *ngIf="storeData.store['wallet'] as walletData" class="balance text-green notranslate">{{walletData.init_currency.symbol}}<span class="bal___display">{{walletData.balance.new|currencyConverter|number}}</span>
+    </div>
+</div>

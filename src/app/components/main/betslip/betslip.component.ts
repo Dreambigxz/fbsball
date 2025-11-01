@@ -1,0 +1,43 @@
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { StoreDataService } from '../../../reuseables/http-loader/store-data.service';
+import { MatchService } from '../../../reuseables/services/match.service';
+
+import { ReactiveFormsModule, FormBuilder, Validators, FormsModule } from '@angular/forms';
+import { CurrencyConverterPipe } from '../../../reuseables/pipes/currency-converter.pipe';
+
+@Component({
+  selector: 'app-betslip',
+  imports: [CommonModule,FormsModule, CurrencyConverterPipe],
+  templateUrl: './betslip.component.html',
+  styleUrl: './betslip.component.css'
+})
+export class BetslipComponent {
+
+  storeData = inject(StoreDataService)
+  matchService = inject(MatchService);
+  currencyConverter_ = inject(CurrencyConverterPipe);
+
+  possibleWin = 0
+
+  amounts = [5, 10, 20, 50, 100];
+  selectedAmount: any | null = null;
+
+  isFooterVisible = false;
+  toggleFooter() {
+    this.isFooterVisible = !this.isFooterVisible;
+  }
+
+  selectAmount(value: number): void {
+    this.selectedAmount = value;
+    this.matchService.stakeAmount=this.currencyConverter_.transform(value)
+
+    this.matchService.setProfit()
+
+
+  }
+
+
+
+}

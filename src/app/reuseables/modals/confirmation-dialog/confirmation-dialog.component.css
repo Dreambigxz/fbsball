@@ -1,0 +1,7 @@
+::ng-deep .mat-mdc-dialog-surface {
+  background-color: rgb(22 13 35) !important; // or any color you want
+}
+
+.delete{
+  color: var(--bs-danger) !important;
+}

@@ -1,0 +1,37 @@
+
+<div class="container snipcss-JLy6E">
+  <div class="top-header flex">
+    <p class="name">Hi {{storeData.store['username']}},</p>
+    <div class="right-nav gap-4">
+      <i (click)="authService.logout(false)" style="color:#d97f02" class="fa fa-sign-out icon-btn"></i>
+      <!-- <i class="fa fa-search text-gray icon-btn hide"></i> -->
+      <span  class="notification-bell icon-btn text-pointer">
+        <i class="fa fa-bell text-gray bell-ring"></i>
+        <span class="badge noti-count">0</span>
+      </span>
+    </div>
+  </div>
+  <div class="verify-number-top-content">
+
+      <div class="setting-header">
+          <div  class="setting-left">
+              <!-- <i class="fa fa-bell"></i> -->
+              <span> <img src="" alt="LOGO"></span>
+
+              <!-- <span class="setting-txt">PayFast</span> -->
+          </div>
+
+          <div class="setting-right">
+            <div *ngIf="storeData.store['wallet'] as walletData" class="balance-data text-green notranslate">
+                <!-- $<span class="bal___display"></span> -->
+                <!-- <div *ngIf="storeData.store['wallet'] as walletData" class="balance text-green notranslate"> -->
+                  {{walletData.init_currency.symbol}}
+                  <span class="bal___display">{{walletData.balance.new|currencyConverter|number}}</span>
+
+            <!-- </div> -->
+              <!-- <span><a href="#"><img src="https://up2client.com/envato/payfast-pwa/main-file/light-mode/assets/svg/notification-icon.svg" alt="notification-icon"></a></span>
+              <span class="dots-icon"><a href="#"><img src="https://up2client.com/envato/payfast-pwa/main-file/light-mode/assets/svg/dots-icon.svg" alt="setting-icon"></a></span> -->
+          </div>
+      </div>
+  </div>
+</div>

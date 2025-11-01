@@ -1,0 +1,53 @@
+.card {
+  border-radius: 10px;
+  background: transparent;
+}
+
+.table th, .table td {
+  white-space: nowrap;
+}
+
+.card-body{
+  background: rgb(22 13 35 / 80%)
+}
+@media (max-width: 576px) {
+  .card-body {
+    font-size: 14px;
+  }
+}
+
+tr {
+    /* --bs-table-accent-bg: var(--bs-table-striped-bg); */
+    color: #ccd1d5;
+}
+
+.sigle-card {
+    border-bottom: 1px solid #382541;
+}
+
+.wallet-address {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f4f4f4 !important;
+  padding: 0.6rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  font-family: monospace;
+}
+
+.copy-btn {
+  border: none;
+  color: #fff;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.copy-btn:hover {
+  background: #0056b3;
+}
