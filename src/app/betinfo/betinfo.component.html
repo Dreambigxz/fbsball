@@ -5,7 +5,7 @@
 
 <div class="wrapper">
   <div class="space-top ">
-    <div *ngIf="fixture" class="top_matches__cmncard p2-bg p-4 rounded-3 mb-4 container-fluid">
+    <div *ngIf="fixture; else expiredFixture" class="top_matches__cmncard p2-bg p-4 rounded-3 mb-4 container-fluid">
       <div
         *ngIf="fixture.fixture.fixture.timestamp | countdown | async as time; else expiredFixture"
         class="row gx-0 gy-xl-0 gy-7">
@@ -85,7 +85,7 @@
           width="60"
           alt="no data"
         />
-        <p>Game already live.</p>
+        <p>Game already live / ended.</p>
       </div>
     </ng-template>
   </div>
