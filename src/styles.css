@@ -318,3 +318,7 @@ img.home-t-shirt {
   background: transparent !important;
 
 }
+
+.modal-content{
+  background-color:rgb(var(--p2))
+}

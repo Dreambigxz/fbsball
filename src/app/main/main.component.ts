@@ -13,6 +13,8 @@ import { QuickNotificationsComponent } from "../components/quick-notifications/q
 import { SpinnerComponent } from '../reuseables/http-loader/spinner.component';
 import { QuickNavService } from '../reuseables/services/quick-nav.service';
 
+import { AppDownloadManager } from '../reuseables/services/app-download-manager.service';
+
 @Component({
   selector: 'app-main',
   imports: [
@@ -31,6 +33,8 @@ export class MainComponent {
   reqServerData = inject(RequestDataService)
 
   quickNav = inject(QuickNavService)
+  appManager = inject(AppDownloadManager)
+
 
 
 

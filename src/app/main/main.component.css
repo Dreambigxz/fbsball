@@ -7,7 +7,18 @@
     margin-top: 8px;
     padding-top: 12px;
     padding-bottom: 12px;
+
+    flex-wrap: nowrap;
+    overflow-x: scroll;
 }
+/* Responsive */
+@media (max-width: 400px) {
+  .tab[data-v-73d89818]  {
+    column-gap: 40px
+  }
+
+}
+
 
 *,:before,:after {
     box-sizing: border-box;
