@@ -35,14 +35,14 @@ export class AppComponent {
     if (this.quickNav.storeData.get('total_read')) {
       this.quickNav.reqServerData.post('notifications/?hideSpinner', {total_read:this.quickNav.storeData.get('total_read'),processor:'save_read'}).subscribe()
     }
-    event.preventDefault();
+    // event.preventDefault();
 
     // Standard-compliant browsers ignore the returned string,
     // but this is needed for Chrome/Edge/Firefox to trigger the warning dialog
     event.returnValue = '';
 
     // Optionally, do something before reload:
-    console.log('User is about to reload or close the page!');
+    // console.log('User is about to reload or close the page!');
   }
 
 
