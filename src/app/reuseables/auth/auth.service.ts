@@ -113,6 +113,8 @@ export class AuthService {
 
     localStorage.setItem(this.tokenKey, JSON.stringify(payload));
     localStorage.setItem("clientAction",authAction)
+    localStorage.removeItem('invitedBy')
+
     this.isLoggedIn = true;
 
     return of(true);
@@ -182,7 +184,9 @@ export class AuthService {
     if (this.RefCode&&!this.invitedBy) {
       this.reqServerData.get('register?RefCode='+this.RefCode).subscribe({
         next:res =>{
-          this.invitedBy=res.main.invitedBy
+          this.invitedBy=res.main?.invitedBy||''
+          if (!this.invitedBy) this.RefCode=null
+
         }
       })
     }

@@ -1,6 +1,9 @@
 
 /* You can add global styles to this file, and also import other style files */
 
+.br-12{
+  border-radius: 12px;
+}
 .container-fluid{
   max-width: 600px;
 }
@@ -321,4 +324,7 @@ img.home-t-shirt {
 
 .modal-content{
   background-color:rgb(var(--p2))
+}
+.space-top {
+  padding-bottom: 80px; /* ensures space below content */
 }

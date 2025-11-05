@@ -15,7 +15,11 @@
                                 <h3 class="mb-6 mb-md-8">Create Portal</h3>
                                 <p class="mb-10 mb-md-15"></p>
                                 <div *ngIf="authService.formView['register'] as form" class="login_section__form">
+
                                     <form [formGroup]="form" (ngSubmit)="authService.onSubmit(form,'register')">
+
+                                      <div id="google_translate_element" class="custom-google-select text-warning"></div>
+
                                         <div class="mb-5 mb-md-6">
                                             <input class="n11-bg"  placeholder="Username"
                                                 type="text" formControlName="username">

@@ -3,13 +3,11 @@
 
 <div class="space-top container-fluid">
 
-    <div class="search-container mb-12 border">
+    <div class="search-container mb-12 border br-12">
     <input
       type="text"
       [(ngModel)]="matchService.searchTerm"
       (input)="matchService.search()"
-
-
       placeholder="Search by ID, Team, League, or Country"
     />
   </div>

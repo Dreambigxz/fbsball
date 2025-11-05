@@ -12,6 +12,9 @@
                                 <h3 class="mb-6 mb-md-8">Reset Portal</h3>
                                 <p class="mb-10 mb-md-15"></p>
                                 <div *ngIf="authService.formView['reset'] as form" class="login_section__form">
+
+                                  <div id="google_translate_element" class="custom-google-select text-warning"></div>
+
                                     <form [formGroup]="form" (ngSubmit)="authService.onSubmit(form,'forgot-password')">
                                         <div class="mb-5 mb-md-6">
                                             <input class="n11-bg"  placeholder="Email / username"

@@ -13,9 +13,9 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     if (!path) return false;
 
     // ✅ Skip Transactions route (with or without filter param)
-    if (['transactions','tickets','login','register','betslip'].includes(path)) {
-      return false;
-    }
+    // if (['transactions','tickets','login','register','betslip'].includes(path)) {
+    //   return false;
+    // }
 
     return true;
   }

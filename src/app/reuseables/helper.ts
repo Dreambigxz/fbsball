@@ -1,6 +1,7 @@
 import { Component, Injectable, inject } from '@angular/core';
 
 let timeOuts: any[] =[]
+declare const google: any;
 
 export function createElement(type:any,cls='',dataset=[],data=null,onclickFun=null){
   let ele = document.createElement(type)
@@ -33,11 +34,30 @@ export async function copyContent(qm:any,data:any,message='Copied to clipboard',
    } catch (err) {console.error('Failed to copy: ', err);}
  }
 
+
+ function removeSecondGadgetItem() {
+   const gadget = document.querySelector('.goog-te-gadget');
+   if (gadget && gadget.children.length > 1) {
+     const secondChild = gadget.children[1] as HTMLElement; // ✅ cast to HTMLElement
+     secondChild.style.display = 'none';
+   }
+ }
+
+ function addIconToSelect() {
+  const select = document.querySelector('select.goog-te-combo') as HTMLSelectElement | null;
+  if (select && select.options.length > 1) {
+    select.options[0].textContent = 'Change Language 🌐 '; // Works everywhere
+  }
+}
+
 export function loadScript(scriptUrl: string): Promise<void> {
    return new Promise((resolve, reject) => {
      const existingScript = document.querySelector(`script[src="${scriptUrl}"]`);
+
+     // console.log({existingScript});
+
      if (existingScript) {
-       existingScript.remove();
+       document.body.removeChild(existingScript);
      }
 
      const script = document.createElement('script');
@@ -47,29 +67,34 @@ export function loadScript(scriptUrl: string): Promise<void> {
      script.onload = () => resolve();
      script.onerror = () => reject(new Error(`Script load error: ${scriptUrl}`));
      document.body.appendChild(script);
+
+     (window as any).googleTranslateElementInit = () => {
+      new google.translate.TranslateElement(
+        { pageLanguage: 'en',  },
+        'google_translate_element'
+      );
+    };
    });
  }
 
 export function loadExternalScript(URL='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'){
 
    setTimeout(() => {
-     let element = document.querySelector('.goog-te-gadget-icon');
-     console.log({element});
+     let element = document.querySelector('.goog-te-gadget');
+
      if (!element) {
        loadScript(URL)
        .then(() => {
-         console.log('Google Translate script loaded.');
+         // console.log('Google Translate script loaded.');
          setTimeout(() => {
-           changeGoogleIcon(document.querySelector('.goog-te-gadget-simple'))
-         }, 3000)
+           // changeGoogleIcon(document.querySelector('.goog-te-gadget-simple'))
+           addIconToSelect()
+         }, 2000)
 
        })
        .catch(err => {
          console.error('Script load error:', err);
        });
-     }else{
-       console.log('ELEMENT LOADED');
-       changeGoogleIcon(document.querySelector('.goog-te-gadget-simple'))
      }
    }, 3000); // delay in milliseconds
  }
@@ -79,7 +104,7 @@ function changeGoogleIcon(ele:any) {
    if (ele) {
      ele.querySelector('img').style=''
      ele.style='background:transparent;border:none !important;';
-     ele.querySelector('img')?ele.querySelector('img').src='assets/img/icons/icons8-language-24.png':0;
+     ele.querySelector('img')?ele.querySelector('img').src='assets/imagesg/icons/icons8-language-24.png':0;
    }
  }
 

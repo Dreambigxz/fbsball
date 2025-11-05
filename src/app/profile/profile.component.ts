@@ -13,6 +13,8 @@ import { FormHandlerService } from '../reuseables/http-loader/form-handler.servi
 
 import { ReactiveFormsModule, FormBuilder, Validators , FormsModule} from '@angular/forms';
 
+import { AppDownloadManager } from '../reuseables/services/app-download-manager.service';
+
 @Component({
   selector: 'app-profile',
   imports: [
@@ -24,9 +26,11 @@ import { ReactiveFormsModule, FormBuilder, Validators , FormsModule} from '@angu
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
+
 export class ProfileComponent {
 
   quickNav = inject(QuickNavService)
+  appManager= inject(AppDownloadManager)
 
   formHandler = inject(FormHandlerService);
   fb = inject(FormBuilder);

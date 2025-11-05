@@ -98,6 +98,7 @@
       background-repeat: no-repeat !important;
       isolation: isolate;
       background-attachment: fixed !important;
+
     }
 
       /* Overlay to darken background */
@@ -112,25 +113,21 @@
 
       /* Custom style for the select dropdown */
       .custom-google-select .goog-te-combo {
-        background-color: #fff;
-        color: #333;
+        background-color: transparent;
+        color: #ccc;
         padding: 8px 12px;
         font-size: 1rem;
-        border: 1px solid #ccc;
+        border: none;
+        /* 1px solid #ccc; */
         border-radius: 6px;
         appearance: none;
         outline: none;
-        width: 180px;
+        width: auto;
         cursor: pointer;
         font-family: inherit;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 6px rgb(207 151 151 / 10%);
       }
 
-      .custom-google-select {
-        display: flex;
-        justify-content: flex-end;
-        padding: 10px;
-      }
 
       .VIpgJd-ZVi9od-ORHb-OEVmcd{
         display: none !important;
@@ -157,8 +154,8 @@
 
       .custom-google-select {
             display: flex;
-            justify-content: flex-end;
-            padding: 10px;
+            /* justify-content: flex-end;
+            padding: 10px; */
             margin-left: auto;
         }
 
@@ -176,9 +173,32 @@
           display: none !important;
       }
 
+      .goog-te-gadget > *:nth-child(2) {
+          display: none !important;
+        }
+
+        .goog-te-gadget {
+            font-size: 0 !important; /* hide text like "Powered by" */
+          }
+
+          .goog-te-combo {
+            font-size: 14px !important; /* restore font for dropdown */
+          }
+
       /*  end of  gpoogle translator styling */
 
   </style>
+
+  <!-- <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement(
+        { pageLanguage: 'en', includedLanguages: 'en,fr,de,es,ar,pt,hi,zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+        'google_translate_element'
+      );
+    }
+  </script> -->
+  <!-- <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
+
   <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
 

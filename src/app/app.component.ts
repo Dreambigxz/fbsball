@@ -5,6 +5,8 @@ import { filter, pairwise } from 'rxjs/operators';
 import { QuickNavService } from './reuseables/services/quick-nav.service';
 import { AppDownloadManager } from './reuseables/services/app-download-manager.service';
 
+import {  loadScript , loadExternalScript} from './reuseables/helper';
+
 import { SwUpdate } from '@angular/service-worker';
 import { isDevMode } from '@angular/core';
 
@@ -36,7 +38,13 @@ export class AppComponent {
         if (nav?.trigger !== 'popstate') {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        this.appManager.showDownload()
+        this.appManager.showDownload();
+        loadExternalScript()
+
+        console.log(this.quickNav.storeData.store);
+
+
+
       });
 
 
@@ -57,71 +65,5 @@ export class AppComponent {
     // Optionally, do something before reload:
     // console.log('User is about to reload or close the page!');
   }
-
-
-  // ngOnInit(): void {
-  //
-  //   // Run after every route navigation
-  //   this.router.events
-  //   .pipe(filter(event => event instanceof NavigationEnd))
-  //   .subscribe(() => {this.showDownload()});
-  //
-  // }
-  isIOS(): boolean {
-   return /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-  }
-
-  isInStandaloneMode(): boolean {
-    return (window.matchMedia('(display-mode: standalone)').matches) ||
-           ((navigator as any).standalone === true);
-  }
-
-  showDownload(){
-
-      console.log("etting download ");
-
-      if (this.isIOS() && !this.isInStandaloneMode()) {
-        this.quickNav.storeData.set('installIOS',true)
-        this.quickNav.storeData.set('device','IOS')
-
-      } else {
-        window.addEventListener('beforeinstallprompt', (event) => {
-            event.preventDefault();
-            this.quickNav.storeData.set('installPromptEvent',event)
-            this.quickNav.storeData.set('can_download_app',true)
-            this.quickNav.storeData.set('device','Android')
-        });
-    }
-  }
-  // async ngOnInit(){
-  //   if ('serviceWorker' in navigator) {
-  //     console.log("worker enabled");
-  //     this.swRegistration = await navigator.serviceWorker.ready;
-  //     console.log("ready", this.swRegistration.active, this.swRegistration);
-  //   }
-  //
-  //   // ✅ Register combined service worker manually
-  //   // if ('serviceWorker' in navigator && !isDevMode()) {
-  //   //   window.addEventListener('load', () => {
-  //   //     navigator.serviceWorker
-  //   //       .register('/combined-worker.js')
-  //   //       .then(reg => console.log('✅ Combined SW registered:', reg))
-  //   //       .catch(err => console.error('❌ SW registration failed:', err));
-  //   //   });
-  //   // }
-  //
-  //   if (this.swUpdate.isEnabled) {
-  //     // 🔄 Listen for updates
-  //     this.swUpdate.versionUpdates.subscribe(event => {
-  //       if (event.type === 'VERSION_READY') {
-  //         this.updateAvailable = true;
-  //       }
-  //     });
-  //   }else{
-  //     console.log("service worker nnot enabled");
-  //
-  //   }
-  // }
-
 
 }
