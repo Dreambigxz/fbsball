@@ -1,5 +1,7 @@
-import { Pipe, PipeTransform, ChangeDetectorRef } from '@angular/core';
-import { interval, map, of, startWith, takeWhile } from 'rxjs';
+import { Pipe, PipeTransform, ChangeDetectorRef, NgZone, inject} from '@angular/core';
+import { Observable, interval } from 'rxjs';
+import { map, startWith, takeWhile } from 'rxjs/operators';
+import { MatchService } from '../services/match.service'; // ✅ adjust path as needed
 
 @Pipe({
   name: 'countdown',
@@ -7,11 +9,17 @@ import { interval, map, of, startWith, takeWhile } from 'rxjs';
   pure: false
 })
 export class CountdownPipe implements PipeTransform {
-  constructor(private cdr: ChangeDetectorRef) {}
+  private timer$: Observable<string | null> | null = null;
+  private lastTarget: any = null;
 
-  transform(targetDate: Date | string | number, addHours: number = 0) {
-    if (!targetDate) return of(null);
+  private matchService =  inject(MatchService)
 
+  constructor(private cdr: ChangeDetectorRef, private zone: NgZone) {}
+
+  transform(targetDate: Date | string | number, addHours: number = 0,source:any=0): Observable<string | null> {
+    if (!targetDate) return new Observable((obs) => obs.next(null));
+
+    // 🧭 Normalize input
     const start = new Date(
       typeof targetDate === 'number'
         ? targetDate * 1000
@@ -22,36 +30,47 @@ export class CountdownPipe implements PipeTransform {
 
     const settleAt = addHours ? start + addHours * 60 * 60 * 1000 : start;
 
-    return interval(1000).pipe(
-      startWith(0),
-      map(() => {
-        const now = Date.now();
-        const diff = settleAt - now;
+    // ⚡ Reuse existing timer if same input
+    if (this.lastTarget === settleAt && this.timer$) return this.timer$;
+    this.lastTarget = settleAt;
 
-        if (diff <= 0) return null;
+    // ✅ Create observable timer outside Angular zone
+    this.zone.runOutsideAngular(() => {
+      this.timer$ = interval(1000).pipe(
+        startWith(0),
+        map(() => {
+          const now = Date.now();
+          const diff = settleAt - now;
 
-        const totalSeconds = Math.floor(diff / 1000);
-        const days = Math.floor(totalSeconds / (3600*24));
-        let hours,minutes,seconds;
-        if (days) {
-          hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
-          minutes = Math.floor((totalSeconds % 3600) / 60);
-          seconds = totalSeconds % 60;
-        }else{
-           hours = Math.floor(diff / (1000 * 60 * 60));
-           minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-          seconds = Math.floor((diff % (1000 * 60)) / 1000);
+          if (diff <= 0) {
 
-        }
+            if (source==='upcoming') {
+              this.matchService.upcoming()
+            }
 
-        const formattedMinutes = minutes.toString().padStart(2, '0');
-        const formattedSeconds = seconds.toString().padStart(2, '0');
+            return null
+          };
 
-        this.cdr.markForCheck(); // ✅ tell Angular it’s okay
+          const totalSeconds = Math.floor(diff / 1000);
+          const days = Math.floor(totalSeconds / (3600 * 24));
+          const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+          const minutes = Math.floor((totalSeconds % 3600) / 60);
+          const seconds = totalSeconds % 60;
 
-        return `${days?days+'d':''} ${hours}h ${formattedMinutes}m ${formattedSeconds}s`;
-      }),
-      takeWhile((val) => val !== null, true)
-    );
+          const formatted = `${days ? days + 'd ' : ''}${hours}h ${minutes
+            .toString()
+            .padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
+
+          // ✅ Let Angular know to refresh view safely
+          this.zone.run(() => this.cdr.markForCheck());
+
+
+          return formatted;
+        }),
+        takeWhile((val) => val !== null, true)
+      );
+    });
+
+    return this.timer$!;
   }
 }

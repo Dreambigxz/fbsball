@@ -3,6 +3,7 @@ import { CurrencyConverterPipe } from '../pipes/currency-converter.pipe';
 import { StoreDataService } from '../http-loader/store-data.service';
 import { ConfirmationDialogService } from '../modals/confirmation-dialog/confirmation-dialog.service';
 import { RequestDataService } from '../http-loader/request-data.service';
+import { QuickNavService } from '../services/quick-nav.service'; // ✅ adjust path as needed
 
 
 @Injectable({
@@ -14,12 +15,14 @@ export class MatchService {
   storeData = inject(StoreDataService)
   reqConfirmation = inject(ConfirmationDialogService)
   reqServerData= inject(RequestDataService)
+  quickNav= inject(QuickNavService)
 
   fixtures:any
 
   addingFixture:any
   possibleWin:any=0
-  stakeAmount:any=5
+  stakeAmount:any=0
+  minimumStake:any=0
   booking_link = ''
   upcomingMatches:any=[]
 
@@ -76,9 +79,7 @@ export class MatchService {
       if (!this.notStartedMatches.length) {
         await this.nextDayData()
 
-        console.log("loadedNEXTDAY");
-
-        this.notStartedMatches= matches
+        this.notStartedMatches= this.fixtures
           .filter((m: any) => new Date(m.fixture.fixture.timestamp*1000) > now)
           .sort(
             (a: any, b: any) =>
@@ -106,10 +107,12 @@ export class MatchService {
   /** Upcoming (first 10 not started) */
   async upcoming(matches: any=null, now: Date = new Date()) {
 
-    !matches?matches=this.fixtures:0;
-    let ns = await this.notStarted(matches, now)
 
-    return ns.slice(0, 10);
+    !matches?[this.setFixtures(),matches=this.fixtures]:0;
+    let ns = await this.notStarted(matches, now)
+    this.upcomingMatches=ns.slice(0, 10)
+
+    return this.upcomingMatches;
   }
 
   showBetSlip(fixture:any,selected:any){
@@ -117,6 +120,9 @@ export class MatchService {
     slipEle?.classList.add('show')
     fixture['selectedScore']=selected
     this.addingFixture=fixture
+    !this.minimumStake?[
+      this.minimumStake=this.currencyConverter.transform(this.storeData.get("bet_settings").minimum)
+    ]:0
   }
 
   stakeAmountHandler(event: KeyboardEvent) {
@@ -146,7 +152,10 @@ export class MatchService {
       startDate:new Date(this.addingFixture.fixture.fixture.timestamp*1000)
     }
 
-
+    if (!processor.includes('book')&&parseFloat(this.minimumStake)>this.stakeAmount) {
+      this.quickNav.alert(`Minimum of ${this.minimumStake} allowed!`,'error')
+      return
+    }
     this.reqConfirmation.confirmAction(()=>{
       this.reqServerData.post('bet/?showSpinner',{...slipData,processor}).subscribe({
         next:res=>{
@@ -155,7 +164,9 @@ export class MatchService {
               this.booking_link = `${window.location.origin}/betslip/${this.addingFixture.id}`
               console.log(this.booking_link);
               // this.openModal("bookingLinkmodal")
-              alert(this.booking_link)
+              this.quickNav.copy(this.booking_link)
+              this.quickNav.alert(`Booking url Copied`,'success')
+
 
           }
       }
@@ -169,8 +180,7 @@ export class MatchService {
     this.setFixtures()
  }
 
-
- async search() {
+  async search() {
 
    const term = this.searchTerm.toLowerCase()//this.searchTerm.toLowerCase();
    const matches = await this.notStarted();
@@ -182,7 +192,7 @@ export class MatchService {
      m.fixture.league.namme?.toLowerCase().includes(term) ||
      m.fixture.league.country?.toLowerCase().includes(term)
    );
-}
+ }
 
 
 }

@@ -6,7 +6,9 @@
 <div class="wrapper">
   <div class="space-top ">
     <div *ngIf="fixture" class="top_matches__cmncard p2-bg p-4 rounded-3 mb-4 container-fluid">
-      <div class="row gx-0 gy-xl-0 gy-7">
+      <div
+        *ngIf="fixture.fixture.fixture.timestamp | countdown | async as time; else expiredFixture"
+        class="row gx-0 gy-xl-0 gy-7">
         <div class="col-xl-5 col-xxl-4">
             <div class="top_matches__clubname">
                 <div class="top_matches__cmncard-right d-flex align-items-start justify-content-between pb-4 mb-4 gap-4 ">
@@ -44,9 +46,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-7 col-xxl-8">
+        <div class="col-xl-7 col-xxl-8 gap-4">
             <div class="top_matches__clubdata mt-12">
-                <h3>Ancti Score</h3>
+                <h3>Anti Score</h3>
             </div>
 
             <div class="m-table mt-12">
@@ -56,9 +58,17 @@
                 <span>Away</span>
               </div>
               <div *ngFor="let row of predictionRows" class="m-table-row m-outcome snipcss-lEH2o">
-                <div (click)="matchService.showBetSlip(fixture,{odds:odd.odds,value:odd.value});activeRow=odd.value;activeID=fixture.fixtureID" *ngFor="let odd of row" class="m-table-cell m-table-cell--responsive style-FBHIN" [class.active]='activeRow===odd.value&&activeID===fixtureID' id="style-FBHIN">
-                  <span class="m-table-cell-item">{{odd.value}}</span>
-                  <span class="m-table-cell-item">{{odd.odds|number:'1.2-2'}}</span>
+                <div
+                  (click)="matchService.showBetSlip(fixture,{odds:odd.odds,value:odd.value});activeRow=odd.value;activeID=fixture.fixtureID"
+                  *ngFor="let odd of row" class="m-table-cell m-table-cell--responsive style-FBHIN"
+                  [class.active]='activeRow===odd.value&&activeID===fixtureID' id="style-FBHIN"
+                  [class.content-disabled]="!odd.value||odd.value==='-'||excludeScores.includes(odd.value)"
+                  >
+                  <div *ngIf="odd.value&&odd.value!=='-'&&!excludeScores.includes(odd.value)">
+                    <span class="m-table-cell-item">{{odd.value}}</span>
+                    <span class="m-table-cell-item">{{odd.odds|number:'1.2-2'}}</span>
+                  </div>
+
                 </div>
                 <!-- <div class="m-table-cell m-table-cell--responsive style-sPFnR" id="style-sPFnR"><span class="m-table-cell-item">3:2</span><span class="m-table-cell-item">33.98</span> </div>
                 <div class="m-table-cell m-table-cell--responsive style-A4NwN" id="style-A4NwN"><span class="m-table-cell-item">4:2</span><span class="m-table-cell-item">97.50</span> </div> -->
@@ -68,16 +78,15 @@
       </div>
     </div>
 
-    <div *ngIf="!fixture" class="empty-state">
+    <ng-template #expiredFixture class="empty-state">
       <div class="no-data text-center">
         <img
           src="https://cdn-icons-png.flaticon.com/512/595/595067.png"
           width="60"
           alt="no data"
         />
-        <p>No data found.</p>
-
+        <p>Game already live.</p>
       </div>
-    </div>
+    </ng-template>
   </div>
 </div>

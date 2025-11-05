@@ -43,11 +43,19 @@ export class DepositComponent {
 
   ngOnInit(){
       this.storeData.store['pageDetails']='wallet'
-      if (!this.storeData.get('deposit')) {this.reqServerData.get('wallet?dir=start_deposit').subscribe((res)=>{
+      if (!this.storeData.get('deposit')) {
+        this.reqServerData.get('wallet?dir=start_deposit').subscribe((res)=>{
         this.walletService.setPaymentMode("", "", true);
-        console.log({res});
-
       })}
+
+  }
+
+  goToPaymentPage(deposit:any){
+
+    let extraField = deposit.extraField
+
+    window.open(extraField.url, '_blank'); // opens in a new tab
+
 
   }
 

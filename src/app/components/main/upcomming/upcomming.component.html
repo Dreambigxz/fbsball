@@ -1,4 +1,4 @@
-<section class="mt-12">
+<section class="mt-12 container">
   <div class="d-flex space-between">
     <h5>Upcoming Matches</h5>
     <span (click)="router.navigate(['/matches'])" class="text-deem">View more <i class="ti ti-caret-right"></i></span>
@@ -12,12 +12,15 @@
                         <div class="swiper live-playing">
                             <div class="hero_area__topslider swiper-wrapper ">
                               <div
-                                *ngFor="let i of upcomingMatches; let in = index"
-                                  class="hero_area__topslider-card swiper-slide p-4 p-md-6 nb-"
+                                *ngFor="let i of matchService.upcomingMatches; let in = index"
                                   (click)="router.navigate(['/betinfo/'+i.fixtureID]);"
+                                  class="hero_area__topslider-card swiper-slide p-4 p-md-6"
                                   >
 
-                                  <div class="">
+                                  <div
+                                    *ngIf="i.fixture.fixture.timestamp | countdown:0:'upcoming' | async as time"
+
+                                    >
                                     <div
                                         class="hero_area__topslider-cardtop d-flex align-items-center justify-content-between mb-4 mb-md-6">
                                         <div class="d-flex align-items-center gap-2">

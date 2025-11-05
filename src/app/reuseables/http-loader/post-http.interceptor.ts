@@ -25,8 +25,6 @@ export const PostHttpInterceptor: HttpInterceptorFn = (req, next) => {
   // 🔑 Ensure we always check login before sending
   authService.checkLogin();
 
-  console.log("isLoggedIn?", authService.isLoggedIn);
-
   // Add token header if logged in
   let headers = req.headers || new HttpHeaders();
   if (authService.isLoggedIn && authService.token) {

@@ -13,12 +13,13 @@ import { BetslipComponent } from "../components/main/betslip/betslip.component";
 
 import { MatchService } from '../reuseables/services/match.service';
 import { TimeFormatPipe } from '../reuseables/pipes/time-format.pipe';
+import { CountdownPipe } from '../reuseables/pipes/countdown.pipe';
 
 @Component({
   selector: 'app-betinfo',
   imports: [Header2Component,CommonModule,
     BetslipComponent,TimeFormatPipe,
-    SpinnerComponent
+    SpinnerComponent,CountdownPipe
   ],
   templateUrl: './betinfo.component.html',
   styleUrl: './betinfo.component.css'
@@ -42,6 +43,8 @@ export class BetinfoComponent {
 
   activeRow:any
   activeID:any
+
+  excludeScores = ["44"]
 
   ngOnInit (): void {
 
@@ -82,7 +85,6 @@ export class BetinfoComponent {
     const [fixture]= this.fixtures.filter((m:any)=>m.fixtureID===id);this.fixture=fixture
 
     this.predictionRows =fixture?.odds//['odds'][id]
-
 
     if (secured) {
       this.matchService.showBetSlip(this.fixture,{odds:secured.data.odds,value:secured.data.value});

@@ -15,12 +15,14 @@ import { StoreDataService } from '../../../reuseables/http-loader/store-data.ser
 import { RequestDataService } from '../../../reuseables/http-loader/request-data.service';
 import { MatchService } from '../../../reuseables/services/match.service';
 import { TimeFormatPipe } from '../../../reuseables/pipes/time-format.pipe';
+import { CountdownPipe } from '../../../reuseables/pipes/countdown.pipe';
+
 import { loadScript, padNum } from '../../../reuseables/helper';
 
 @Component({
   selector: 'app-upcomming',
   standalone: true,
-  imports: [CommonModule, TimeFormatPipe],
+  imports: [CommonModule, TimeFormatPipe,CountdownPipe],
   templateUrl: './upcomming.component.html',
   styleUrls: ['./upcomming.component.css']
 })
@@ -51,10 +53,7 @@ export class UpcommingComponent implements AfterViewInit {
   async setData(): Promise<void>{
 
     this.matchService.setFixtures()
-    this.upcomingMatches = await this.matchService.upcoming(this.storeData.store['soccer']);
-    console.log("upcomingMatches", this.upcomingMatches.length);
-
-    this.slidesLoaded = true;
+    this.matchService.upcoming(this.storeData.store['soccer']);
 
   }
 

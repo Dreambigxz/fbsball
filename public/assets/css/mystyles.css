@@ -92,34 +92,7 @@ form .n11-bg:focus {
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
-  background: #333;
-  border-radius: 4px;
-  color: #ffca27;
-  cursor: pointer;
-  justify-content: center;
-  line-height: 44px;
-  margin-left: 2px;
-  text-align: center;
-}
-
-.m-outcome {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  height: 44px;
-  position: relative;
-  width: 64px;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  background: #333;
+  background: transparent;
   border-radius: 4px;
   color: #ffca27;
   cursor: pointer;

@@ -1,50 +1,86 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { QuickNavService } from '../../reuseables/services/quick-nav.service';
+import { MomentAgoPipe } from '../../reuseables/pipes/moment.pipe';
 
 @Component({
   selector: 'app-quick-notifications',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, MomentAgoPipe],
   templateUrl: './quick-notifications.component.html',
-  styleUrl: './quick-notifications.component.css'
+  styleUrls: ['./quick-notifications.component.css']
 })
-export class QuickNotificationsComponent {
+export class QuickNotificationsComponent implements OnInit, OnDestroy {
+  quickNav = inject(QuickNavService);
+  router = inject(Router);
 
-  notifications: string[] = [];
+  notifications: any[] = [];
   showNotifications = false;
-  currentNotification: string | null = null;
+  currentNotification: any;
+  currentNotificationHeader: any;
   currentIndex = 0;
-
+  total_read = 0
+  private timer: any;
 
   ngOnInit() {
-  // Sample notifications
-  this.notifications = [
-  'Welcome to our site!',
-  'New betting event starts at 8 PM.',
-  'Team rankings updated — check out the leaderboard!',
-  'Earn bonuses for daily logins.'
-  ];
 
-
-  // Show box after 20 seconds
-  setTimeout(() => {
-    this.showNotifications = true;
-    this.showNextNotification();
-  }, 0);
-  }
-
-
-  showNextNotification() {
-    if (!this.notifications.length) return;
-
-    this.currentNotification = this.notifications[this.currentIndex];
-
-    this.currentIndex++;
-    if (this.currentIndex >= this.notifications.length) {
-      this.currentIndex = 0; // loop back to start
+    if (!this.quickNav.storeData.get('notification')) {
+      this.quickNav.storeData.set('total_read',0)
+      this.quickNav.reqServerData.get('notifications?rtype=unseen').subscribe({
+        next: (res) => {
+          this.notifications = this.quickNav.storeData.get('notification').unseen || [];
+          if (this.notifications.length) {
+            this.timer = setTimeout(() =>{this.showNotifications = true; this.showNextNotification()}, 2000);
+          }
+        }
+      });
+    }
+    else {
+      this.notifications = this.quickNav.storeData.get('notification').unseen || [];
+      if (this.notifications.length) {
+        this.currentIndex = 0;
+        this.timer = setTimeout(() =>{this.showNotifications = true; this.showNextNotification()}, 5000);      }
     }
 
-   setTimeout(() => this.showNextNotification(), 4000); // change notification every 4s
+    // this.router.events
+    //   .pipe(filter(event => event instanceof NavigationEnd))
+    //   .subscribe(() => {
+    //     if (this.timer) clearTimeout(this.timer);
+    //     this.notifications = this.quickNav.storeData.get('notification')?.unseen || [];
+    //     if (this.notifications.length&&this.showNotifications) {
+    //       this.currentIndex = 0;
+    //       this.showNextNotification();
+    //     }
+    //   });
   }
 
+  saveUnreadNoti() {
+    if(!this.quickNav.storeData.get('total_read'))return
+    this.quickNav.reqServerData.post('notifications/?hideSpinner', {total_read:this.quickNav.storeData.get('total_read'),processor:'save_read'}).subscribe((res)=>{
+    this.quickNav.storeData.set('total_read',0)
+  })}
+
+  showNextNotification() {
+    if (!this.notifications.length) {this.close();return};
+    this.currentNotification = this.notifications[this.currentIndex];
+
+    this.quickNav.storeData.get('notification').unseen.pop(this.currentIndex)
+    this.quickNav.storeData.store['total_read']+=1
+    this.currentIndex = (this.currentIndex + 1) % this.notifications.length;
+
+    this.timer = setTimeout(() => this.showNextNotification(), 11000);
+  }
+
+  close() {
+    this.saveUnreadNoti();
+    this.notifications = [];
+    this.showNotifications=false
+    if (this.timer) clearTimeout(this.timer);
+  }
+
+  ngOnDestroy() {
+    if (this.timer) clearTimeout(this.timer);
+  }
 }

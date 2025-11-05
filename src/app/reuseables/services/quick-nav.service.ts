@@ -9,6 +9,8 @@ import { RequestDataService } from '../http-loader/request-data.service';
 import { ToastService } from '../toast/toast.service';
 import { AuthService } from '../auth/auth.service';
 
+import { copyContent } from '../helper';
+
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +27,17 @@ export class QuickNavService {
    storeData = inject(StoreDataService)
    reqServerData = inject(RequestDataService)
    authService=inject(AuthService)
+   toast=inject(ToastService)
 
   go(url: string, queryParams?: any): void {
    this.router.navigate([url], { queryParams });
- }
+  }
+
+  alert(message:any,status:string='success'){
+    this.toast.show({message,status})
+  }
+
+  copy(item:any){
+    copyContent(this.toast,item)
+  }
 }

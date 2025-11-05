@@ -8,10 +8,12 @@ import { Header2Component } from "../components/header2/header2.component";
 import { MenuBottomComponent } from "../components/menu-bottom/menu-bottom.component";
 
 import { TimeFormatPipe } from '../reuseables/pipes/time-format.pipe';
+import { CountdownPipe } from '../reuseables/pipes/countdown.pipe';
 import { TruncateCenterPipe } from '../reuseables/pipes/truncate-center.pipe';
 
 import { Router } from '@angular/router';
 import { ReactiveFormsModule,FormsModule, FormBuilder } from '@angular/forms';
+import { QuickNotificationsComponent } from "../components/quick-notifications/quick-notifications.component";
 
 
 @Component({
@@ -19,7 +21,8 @@ import { ReactiveFormsModule,FormsModule, FormBuilder } from '@angular/forms';
   imports: [
     CommonModule,CurrencyConverterPipe,
     SpinnerComponent,Header2Component, MenuBottomComponent,
-    TimeFormatPipe,TruncateCenterPipe,FormsModule
+    TimeFormatPipe,TruncateCenterPipe,FormsModule,CountdownPipe,
+    QuickNotificationsComponent
   ],
   templateUrl: './matches.component.html',
   styleUrl: './matches.component.css'
@@ -34,19 +37,13 @@ export class MatchesComponent {
   ngOnInit(): void {
     if (!this.matchService.storeData.get('soccer')) {
       this.matchService.reqServerData.get('soccer/?showSpinner').subscribe({
-        next: (res) => {
-          console.log({res});
-
-          this.setData()
-        }
+        next: (res) => {this.setData()}
       });
-    }else{
-      this.setData()
     }
   }
 
-  async setData():Promise<void> {
+  async setData(){
     this.matchService.setFixtures()
-    this.matchService.filteredMatches$ = await this.matchService.notStarted(this.matchService.storeData.store['soccer']);
+    this.matchService.notStarted(this.matchService.storeData.store['soccer']);
   }
 }

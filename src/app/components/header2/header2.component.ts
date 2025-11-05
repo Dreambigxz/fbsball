@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { CurrencyConverterPipe } from '../../reuseables/pipes/currency-converter.pipe';
 import { StoreDataService } from '../../reuseables/http-loader/store-data.service';
+import { QuickNotificationsComponent } from "../quick-notifications/quick-notifications.component";
 
 import { Router, RouterLink, NavigationEnd, RouterLinkActive} from '@angular/router';
 
 @Component({
   selector: 'app-header2',
-  imports: [CommonModule,CurrencyConverterPipe],
+  imports: [CommonModule,CurrencyConverterPipe,QuickNotificationsComponent],
   templateUrl: './header2.component.html',
   styleUrl: './header2.component.css'
 })

@@ -27,10 +27,20 @@
             <!-- Totals Summary -->
             <div class="summary-card">
               <ul class="item-flex-list">
-                <li><span class="text-first">Total teams:</span> <span>{{ data.total.generation_1 + data.total.generation_2 + data.total.generation_3 }}</span></li>
-                <li><span class="text-first">Active teams:</span><span>{{ data.active.generation_1 + data.active.generation_2 + data.active.generation_3 }}</span></li>
-                <li><span class="text-first">Total earnings:</span> <span class="text-deem"> {{data.total_earning |currencyConverter:true}} </span></li>
-                <li (click)="quickNav.go('/promotions/inactive-users')"><span class="text-first  ">Inactive teams:</span> <span class=" inactive-count text-danger"> {{data.total.generation_1 - data.active.generation_1}} </span></li>
+                <!-- <li><span class="text-first">Today income:</span> <span class="text- text-yellow"> {{data.total_earning |currencyConverter:true}} </span></li> -->
+                <li><span class="text-first">Total earnings:</span> <span class=""> {{data.total_earning |currencyConverter:true}} </span></li>
+
+                <li><span class="text-first">Team Size:</span> <span class="text-deem">{{ data.total.generation_1 + data.total.generation_2 + data.total.generation_3 }}</span></li>
+                <!-- <li><span class="text-first">Total teams:</span> <span>{{ data.total.generation_1 + data.total.generation_2 + data.total.generation_3 }}</span></li> -->
+                <li><span class="text-first">Active team:</span><span class="text-success">{{ data.active.generation_1 + data.active.generation_2 + data.active.generation_3 }}</span></li>
+                <li (click)="quickNav.go('/promotions/inactive-users')">
+                  <span class="text-first  ">Inactive teams:</span>
+                  <div class="d-flex gap-4">
+                    <span class=" inactive- text-danger"> {{data.total.generation_1 - data.active.generation_1}}  </span>
+                    <i class="ti ti-arrow-right"></i>
+                  </div>
+                </li>
+
               </ul>
             </div>
 
@@ -63,7 +73,7 @@
                             (click)="subEarningTab = tab"
                             [class.clickable-active]="subEarningTab === tab"
                           >
-                            <span>{{tab}}</span>
+                            <span >{{tab}}</span>
                           </div>
 
                         </div>
@@ -76,10 +86,13 @@
                         <div *ngIf="subEarningTab === 'Referral'" class="section-card">
                           <h3>Referral Earnings</h3>
                           <div class="gen-grid">
-                            <div class="gen-card" *ngFor="let gen of [1, 2, 3]">
-                              <h4>Generation {{ gen }}</h4>
-                              <p><strong>Count:</strong> {{ data.referral['generation_' + gen].count }}</p>
-                              <p><strong>Amount:</strong> {{ data.referral['generation_' + gen].amount |currencyConverter:true }}</p>
+                            <div class="gen-card" *ngFor="let percent of quickNav.storeData.store['refDir']?.settings.percent?.referral;let gen=index">
+                              <h4>Generation {{ gen+1 }}</h4>
+                              <p><strong>Count:</strong> {{ data.referral['generation_' + (gen+1)].count }}</p>
+                              <p><strong>Amount:</strong> {{ data.referral['generation_' + (gen+1)].amount |currencyConverter:true }}</p>
+                              <p class="text-deem">
+                                You get %{{percent}} first deposit commission.
+                              </p>
                             </div>
                           </div>
                           <div class="total-line">
@@ -92,10 +105,13 @@
                         <div *ngIf="subEarningTab === 'Rebate'" class="section-card">
                           <h3>Rebate Earnings</h3>
                           <div class="gen-grid">
-                            <div class="gen-card" *ngFor="let gen of [1, 2, 3]">
-                              <h4>Generation {{ gen }}</h4>
-                              <p><strong>Count:</strong> {{ data.rebate['generation_' + gen].count }}</p>
-                              <p><strong>Amount:</strong> {{ data.rebate['generation_' + gen].amount |currencyConverter:true }}</p>
+                            <div class="gen-card" *ngFor="let percent of quickNav.storeData.store['refDir']?.settings.percent?.rebate;let gen=index">
+                              <h4>Generation {{ gen+1 }}</h4>
+                              <p><strong>Count:</strong> {{ data.rebate['generation_' + (gen+1)].count }}</p>
+                              <p><strong>Amount:</strong> {{ data.rebate['generation_' + (gen+1)].amount |currencyConverter:true }}</p>
+                              <small class="text-deem">
+                                You get %{{percent}} continuous betting bonus.
+                              </small>
                             </div>
                           </div>
                           <div class="total-line">

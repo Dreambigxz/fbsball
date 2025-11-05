@@ -36,7 +36,7 @@ export class WalletService {
   initCurrencies: any = []
   selectedCurrency:any
   minimumPayment=0
-  page='deposit'
+  page:any
 
   previewUrl: string | null = null;
   selectedFile: File | null = null;
@@ -130,8 +130,6 @@ export class WalletService {
       initializing?this.setDepositView():0;
     }
 
-    // console.log({mode,method,activeForm:this.methodView[this.activeForm], page:this.page, initializing});
-    // console.log(this.storeData.store);
 
   }
 
@@ -173,7 +171,10 @@ export class WalletService {
 
   handleSubmit(form:any,processor:any){
     this.formHandler.submitForm(form, processor, 'wallet/?showSpinner', true,  (res) => {
-      console.log({handleSubmit:res});
+      if (res.payment_link) {
+        //open a new tab url
+        window.open(res.payment_link, '_blank'); // opens in a new tab
+      }
 
     })
   }

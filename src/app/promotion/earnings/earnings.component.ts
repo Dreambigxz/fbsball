@@ -49,11 +49,11 @@ export class EarningsComponent {
       if (!this.quickNav.storeData.get('refDir')) {this.quickNav.reqServerData.get("promotions/").subscribe(
         (res)=>{
           this.makeRefLink()
+          console.log({res});
+
         }
       )}
   }
-
-  copyRefCode(code:any){}
 
   MainTablistener(tab:any){
     this.activeTab=tab

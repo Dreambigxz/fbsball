@@ -92,9 +92,7 @@ export class BethistoryComponent implements OnInit {
   settledClick(){
     this.activeTab = 'settled';
     !this.subDisplayInit?this.selectSubTab("won"):0
-    console.log('subDisplay>>',this.subDisplay);
     this.subDisplayInit=true
-
   }
 
   /** Lifecycle hook — fetch ticket history */
@@ -120,9 +118,10 @@ export class BethistoryComponent implements OnInit {
   }
 
 
-  setProfit(bet:any){
+  setProfit(bet:any,add_stake=false){
     const totalProfit = (bet.stake_amount * bet.market_odds / 100 )
-    return (totalProfit + bet.stake_amount).toFixed(2)
+    let stake = add_stake?bet.stake_amount:0
+    return (totalProfit + stake).toFixed(2)
   }
 
   filterByDate() {

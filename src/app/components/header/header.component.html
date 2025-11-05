@@ -6,8 +6,8 @@
       <i (click)="authService.logout(false)" style="color:#d97f02" class="fa fa-sign-out icon-btn"></i>
       <!-- <i class="fa fa-search text-gray icon-btn hide"></i> -->
       <span  class="notification-bell icon-btn text-pointer">
-        <i class="fa fa-bell text-gray bell-ring"></i>
-        <span class="badge noti-count">0</span>
+        <i [class.bell-ring]="storeData.store['notification']?.unseen?.length" class="fa fa-bell text-gray"></i>
+        <span class="badge noti-count">{{storeData.store['notification']?.unseen?.length}}</span>
       </span>
     </div>
   </div>

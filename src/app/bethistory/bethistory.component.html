@@ -41,7 +41,11 @@
                     vs
                     {{ bet.fixture[0].teams.away.name }}
                   </h5>
-                  <small>Odds: {{ bet.market_odds|number:"1.1-2" }} | Return:<span class="return">{{setProfit(bet)|currencyConverter:true}}</span></small>
+                  <small>
+                    Odds: {{ bet.market_odds|number:"1.1-2" }} |
+                    Return:<span class="return">{{setProfit(bet)|currencyConverter:true}}</span> |
+                    <span class="text-small">{{ bet.fixture[0].fixture.date | date:'short' }}</span>
+                  </small>
                   <br>
                   <small *ngIf="bet.fixture[0].fixture.timestamp |countdown|async as time" (click)="historyServiceLoaded.CancelTicket(bet)"  class="text-danger"> <i class="ti ti-trash fs-five"></i> Delete</small>
                 </div>
@@ -53,9 +57,10 @@
               <div *ngIf="expandedTicketId === bet.id" class="bet-details mt-2">
                 <p>Ticket ID: {{ bet.ticket_id }}</p>
                 <p>League: {{ bet.fixture[0].league.name }}</p>
-                <p>Start: {{ bet.fixture[0].fixture.date | date:'short' }}</p>
                 <p>Market: {{ bet.market_value }}</p>
                 <p class="stake">Stake: {{ bet.stake_amount|currencyConverter:true }}</p>
+                <!-- <p>Start: <span class="text-deem">{{ bet.fixture[0].fixture.date | date:'short' }}</span></p> -->
+
               </div>
             </div>
           </div>
@@ -149,13 +154,19 @@
                 <div *ngIf="expandedTicketId === bet.id" class="bet-details mt-2">
                   <p>Ticket ID: {{ bet.ticket_id }}</p>
                   <p>League: {{ bet.fixture[0].league.name }}</p>
-                  <p>
+                  <p>Market: {{ bet.market_value }}</p>
+
+                  <p class="">
                     Score:
-                    {{ bet.fixture[0].score.fulltime.home }} -
-                    {{ bet.fixture[0].score.fulltime.away }}
+                    <span class="text-main">
+                      {{ bet.fixture[0].score.fulltime.home }} -
+                      {{ bet.fixture[0].score.fulltime.away }}
+                    </span>
+
                   </p>
-                  <p>Start: {{ bet.fixture[0].fixture.date | date:'short' }}</p>
-                  <p class="status-{{bet.status}}">Profit: {{ bet.fixture[0].todays_data?.profit || 0 }}</p>
+                  <p *ngIf="bet.status==='won'" class="">Profit: <span class="status-{{bet.status}}">{{ setProfit(bet,false)|currencyConverter:true }}</span></p>
+                  <p>Start: <span class="text-deem">{{ bet.fixture[0].fixture.date | date:'short' }}</span></p>
+
                 </div>
               </div>
             </ng-container>

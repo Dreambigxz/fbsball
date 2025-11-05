@@ -29,11 +29,14 @@
   <div *ngIf="matchService.notStartedMatches as matches" class="hero_area__topslider ">
     <div
       *ngFor="let i of matches; let in = index"
-        class="hero_area__topslider-card swiper-slide p-4 p-md-6  matches-display"
+        class=""
         (click)="router.navigate(['/betinfo/'+i.fixtureID])"
         >
 
-        <div class="">
+        <div class="hero_area__topslider-card swiper-slide p-4 p-md-6  matches-display"
+          *ngIf="i.fixture.fixture.timestamp | countdown | async as time"
+
+          >
           <div
               class="hero_area__topslider-cardtop d-flex align-items-center justify-content-between mb-4 mb-md-6">
               <div class="d-flex align-items-center gap-2">
@@ -69,7 +72,7 @@
 
   </div>
 
-  <div *ngIf="!notStarted.length" class="empty-state">
+  <div *ngIf="!matchService.notStartedMatches.length" class="empty-state">
     <div class="no-data text-center">
       <img
         src="https://cdn-icons-png.flaticon.com/512/595/595067.png"

@@ -1,13 +1,17 @@
 <div *ngIf="showNotifications" class="notification-box">
-<h4>🔔 Site Notifications</h4>
+  <div class="header d-flex space-between">
+    <h4><i class="ti ti-message"></i> {{currentNotification?.header}}</h4>
+    <i (click)='close()' class="fa fa-close text"></i>
+  </div>
+  <ul *ngIf="currentNotification;">
+  <li>
+    {{ currentNotification?.message }}
+    <br>
+    <small class="text-deem">{{currentNotification?.timestamp|momentAgo}}</small>
+  </li>
+  </ul>
 
-
-<ul *ngIf="currentNotification; else noNotifications">
-<li>{{ currentNotification }}</li>
-</ul>
-
-
-<ng-template #noNotifications>
-<p>No notifications available.</p>
-</ng-template>
+  <button class="copy-btn btn btn-md btn-outline-primary text" >
+    <i class="ti ti-copy"></i> View all
+  </button>
 </div>

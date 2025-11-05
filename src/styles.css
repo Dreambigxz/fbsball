@@ -305,3 +305,16 @@ img.home-t-shirt {
     justify-content: center;
     display: flex;
 }
+
+.text-main{
+  color: #d97f02
+}
+
+.content-disabled{
+  content: '' !important;
+  opacity: 0.5;          /* make it look faded */
+  pointer-events: none;  /* prevent clicks */
+  cursor: not-allowed;
+  background: transparent !important;
+
+}
