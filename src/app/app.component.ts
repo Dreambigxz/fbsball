@@ -41,10 +41,6 @@ export class AppComponent {
         this.appManager.showDownload();
         loadExternalScript()
 
-        console.log(this.quickNav.storeData.store);
-
-
-
       });
 
 

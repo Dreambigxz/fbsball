@@ -161,7 +161,7 @@ export class MatchService {
         next:res=>{
 
           if (processor.includes('book')) {
-              this.booking_link = `${window.location.origin}/betslip/${this.addingFixture.id}`
+              this.booking_link = `${window.location.origin}/betinfo/${this.addingFixture.fixtureID}`
               console.log(this.booking_link);
               // this.openModal("bookingLinkmodal")
               this.quickNav.copy(this.booking_link)

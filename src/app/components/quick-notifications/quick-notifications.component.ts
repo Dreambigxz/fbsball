@@ -30,6 +30,9 @@ export class QuickNotificationsComponent implements OnInit, OnDestroy {
       this.quickNav.storeData.set('total_read',0)
       this.quickNav.reqServerData.get('notifications?rtype=unseen').subscribe({
         next: (res) => {
+
+          console.log({res});
+
           this.notifications = this.quickNav.storeData.get('notification').unseen || [];
           if (this.notifications.length) {
             this.timer = setTimeout(() =>{this.showNotifications = true; this.showNextNotification()}, 2000);
@@ -70,7 +73,7 @@ export class QuickNotificationsComponent implements OnInit, OnDestroy {
     this.quickNav.storeData.store['total_read']+=1
     this.currentIndex = (this.currentIndex + 1) % this.notifications.length;
 
-    this.timer = setTimeout(() => this.showNextNotification(), 11000);
+    this.timer = setTimeout(() => this.showNextNotification(), 6000);
   }
 
   close() {
