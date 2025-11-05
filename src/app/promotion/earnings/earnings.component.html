@@ -88,7 +88,7 @@
                           <div class="gen-grid">
                             <div class="gen-card" *ngFor="let percent of quickNav.storeData.store['refDir']?.settings.percent?.referral;let gen=index">
                               <h4>Generation {{ gen+1 }}</h4>
-                              <p><strong>Count:</strong> {{ data.referral['generation_' + (gen+1)].count }}</p>
+                              <!-- <p><strong>Count:</strong> {{ data.referral['generation_' + (gen+1)].count }}</p> -->
                               <p><strong>Amount:</strong> {{ data.referral['generation_' + (gen+1)].amount |currencyConverter:true }}</p>
                               <p class="text-deem">
                                 You get %{{percent}} first deposit commission.
@@ -107,7 +107,7 @@
                           <div class="gen-grid">
                             <div class="gen-card" *ngFor="let percent of quickNav.storeData.store['refDir']?.settings.percent?.rebate;let gen=index">
                               <h4>Generation {{ gen+1 }}</h4>
-                              <p><strong>Count:</strong> {{ data.rebate['generation_' + (gen+1)].count }}</p>
+                              <!-- <p><strong>Count:</strong> {{ data.rebate['generation_' + (gen+1)].count }}</p> -->
                               <p><strong>Amount:</strong> {{ data.rebate['generation_' + (gen+1)].amount |currencyConverter:true }}</p>
                               <small class="text-deem">
                                 You get %{{percent}} continuous betting bonus.
