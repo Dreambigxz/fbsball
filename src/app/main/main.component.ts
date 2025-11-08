@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from "../components/header/header.component";
 import { SliderComponent } from "../components/main/slider/slider.component";
 import { UpcommingComponent } from "../components/main/upcomming/upcomming.component";
+import { SecuredComponent } from "../components/main/secured/secured.component";
 
 import { RequestDataService } from '../reuseables/http-loader/request-data.service';
 import { StoreDataService } from '../reuseables/http-loader/store-data.service';
@@ -22,7 +23,7 @@ import { AppDownloadManager } from '../reuseables/services/app-download-manager.
      UpcommingComponent, MenuBottomComponent,
      CommonModule,
      QuickNotificationsComponent,
-     SpinnerComponent
+     SpinnerComponent,SecuredComponent
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
@@ -34,8 +35,5 @@ export class MainComponent {
 
   quickNav = inject(QuickNavService)
   appManager = inject(AppDownloadManager)
-
-
-
 
 }

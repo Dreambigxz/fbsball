@@ -5,7 +5,7 @@
     <div class="right-nav gap-4">
       <i (click)="authService.logout(false)" style="color:#d97f02" class="fa fa-sign-out icon-btn"></i>
       <!-- <i class="fa fa-search text-gray icon-btn hide"></i> -->
-      <span  class="notification-bell icon-btn text-pointer">
+      <span (click)="quickNav.go('notifications')" class="notification-bell icon-btn text-pointer">
         <i [class.bell-ring]="storeData.store['notification']?.unseen?.length" class="fa fa-bell text-gray"></i>
         <span class="badge noti-count">{{storeData.store['notification']?.unseen?.length}}</span>
       </span>
@@ -26,7 +26,7 @@
                 <!-- $<span class="bal___display"></span> -->
                 <!-- <div *ngIf="storeData.store['wallet'] as walletData" class="balance text-green notranslate"> -->
                   {{walletData.init_currency.symbol}}
-                  <span class="bal___display">{{walletData.balance.new|currencyConverter|number}}</span>
+                  <span class="bal___display">{{walletData.balance.new|currencyConverter|number:"1.2-2"}}</span>
 
             <!-- </div> -->
               <!-- <span><a href="#"><img src="https://up2client.com/envato/payfast-pwa/main-file/light-mode/assets/svg/notification-icon.svg" alt="notification-icon"></a></span>

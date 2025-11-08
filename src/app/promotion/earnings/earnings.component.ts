@@ -28,7 +28,7 @@ import { MenuBottomComponent } from "../../components/menu-bottom/menu-bottom.co
 export class EarningsComponent {
 
 
-  walletService = inject(WalletService);
+  // walletService = inject(WalletService);
   quickNav = inject(QuickNavService)
 
   tabs = ['Referral', 'Rebate', 'Deposit', 'Withdraw', 'Commission'];
@@ -49,8 +49,6 @@ export class EarningsComponent {
       if (!this.quickNav.storeData.get('refDir')) {this.quickNav.reqServerData.get("promotions/").subscribe(
         (res)=>{
           this.makeRefLink()
-          console.log({res});
-
         }
       )}
   }

@@ -52,9 +52,13 @@ export class DepositComponent {
 
   goToPaymentPage(deposit:any){
 
-    let extraField = deposit.extraField
+    let [extraField,url] = [deposit.extraField,'']
 
-    window.open(extraField.url, '_blank'); // opens in a new tab
+    url = extraField.url || extraField.order_data
+    console.log({extraField});
+
+
+    window.open(url, '_blank'); // opens in a new tab
 
 
   }

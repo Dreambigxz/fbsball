@@ -1,11 +1,11 @@
 
-<div  class="fixed_footer p3-bg rounded-5 container-fluid" [class.show]="isFooterVisible">
+<div  class="fixed_footer p3-bg rounded-5 container-fluid" [class.show]="matchService.isSlipVisible">
         <div *ngIf="matchService.addingFixture" class="fixed_footer__head py-3 px-4">
             <div class="d-flex justify-content-between">
                 <div class="fixed_footer__head-betslip d-flex align-items-center gap-2">
                     <span class="fw-bold">{{matchService.addingFixture?"Betslip":'BetS'}}</span>
                     <span *ngIf="matchService.addingFixture" class="fixed_footer__head-n1">1</span>
-                    <button class="footfixedbtn" type="button" (click)="toggleFooter()">
+                    <button class="footfixedbtn" type="button" (click)="matchService.toggleSlip()">
                       <i class="ti ti-arrow-badge-down-filled n5-color fs-four"></i>
                     </button>
 

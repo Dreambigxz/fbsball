@@ -328,3 +328,37 @@ img.home-t-shirt {
 .space-top {
   padding-bottom: 80px; /* ensures space below content */
 }
+
+.password-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.password-input input {
+  flex: 1;
+  /* height: 38px; */
+}
+.password-input .show-pass-btn {
+  white-space: nowrap;
+  /* height: 38px; */
+  line-height: 1;
+  /* padding: 0 14px; */
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.records.grid {
+    display: grid;
+    position: absolute;
+    margin-top: 4px;
+    margin-bottom:  10px;
+    bottom: 0;
+    /* top: 0;*/
+    right: 0;
+    /* margin-left:  20px; */
+    margin-right: 20px;
+    p{
+      font-size: 15px;
+
+    }
+}

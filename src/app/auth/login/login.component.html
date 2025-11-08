@@ -22,11 +22,21 @@
 
                                         <div class="mb-5 mb-md-6">
                                             <input class="n11-bg"  placeholder="Email / username"
-                                                type="text" formControlName="identifier">
+                                                type="text" formControlName="identifier"
+                                                autocomplete="username"
+                                                >
+
                                         </div>
-                                        <div class="mb-5 mb-md-6">
+                                        <div class="mb-5 mb-md-6 password-input">
                                             <input class="n11-bg" placeholder="Password"
-                                                type="password" formControlName="password">
+                                              [type]="authService.showPassword ? 'text' : 'password'"
+                                                autocomplete="current-password"
+                                                formControlName="password"
+                                                >
+                                                <span (click)="authService.togglePassword()"  class="show-pass-btn">
+                                                  <i *ngIf="authService.showPassword" class="fa fa-eye-slash"></i>
+                                                  <i *ngIf="!authService.showPassword" class="fa fa-eye"></i>
+                                                </span>
                                         </div>
                                         <div class="mb-4 d-lex">
                                           <span style="float:right" class=" gap-1"> <a class="g1-color " (click)="authService.router.navigate(['/reset-password'])">Reset Password</a></span>

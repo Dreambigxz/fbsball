@@ -22,19 +22,27 @@
 
                                         <div class="mb-5 mb-md-6">
                                             <input class="n11-bg"  placeholder="Username"
-                                                type="text" formControlName="username">
+                                                type="text" formControlName="username"
+                                                autocomplete="username">
                                         </div>
                                         <div class="mb-5 mb-md-6">
                                             <input class="n11-bg"  placeholder="Email"
-                                                type="email" formControlName="email">
+                                                type="email" formControlName="email"
+                                                autocomplete="email">
                                         </div>
                                         <div *ngIf="authService.RefCode" class="mb-5 mb-md-6">
                                             <input class="n11-bg"  placeholder="Invited by {{authService.invitedBy}}"
                                                 type="text" formControlName="RefCode" readonly>
                                         </div>
-                                        <div class="mb-5 mb-md-6">
+                                        <div class="mb-5 mb-md-6 password-input">
                                             <input class="n11-bg" placeholder="Password"
-                                                type="password" formControlName="password">
+                                              [type]="authService.showPassword ? 'text' : 'password'"
+                                                autocomplete="current-password"
+                                                formControlName="password">
+                                                <span (click)="authService.togglePassword()"  class="show-pass-btn">
+                                                  <i *ngIf="authService.showPassword" class="fa fa-eye-slash"></i>
+                                                  <i *ngIf="!authService.showPassword" class="fa fa-eye"></i>
+                                                </span>
                                         </div>
                                         <button [class.inactive-btn]="!form.valid" class="cmn-btn px-5 py-3 mb-6 w-100" type="submit">Sign Up Now</button>
                                     </form>

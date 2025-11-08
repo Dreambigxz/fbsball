@@ -73,8 +73,16 @@
           </div>
 
           <ng-template #noHistory>
-            <div class="p-3 text-center text-muted">
-              No reward history yet.
+
+            <div  class="empty-state mt-10 mb-10">
+              <div class="no-data text-center">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/595/595067.png"
+                  width="60"
+                  alt="no data"
+                />
+                <p>No transactions found.</p>
+              </div>
             </div>
           </ng-template>
         </div>

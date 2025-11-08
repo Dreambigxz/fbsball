@@ -59,13 +59,15 @@
         </div>
         <div  class="alert alert-warning  d-flex align-items-center gap-2 mt-5" role="alert">
           <i class="ti ti-alert-triangle fs-5 text-warning"></i>
-          <span *ngIf="!storeData.store['deposit'][0].proof" class="color">
-              <!-- Deposit to our verified bank account and click on payment completed to upload your proof. -->
+          <span *ngIf="storeData.store['local_banks']&&storeData.store['local_banks'][0].automatic" class="color">
               Click the Payment Page link below to complete your payment!
               <br>
               <button (click)="goToPaymentPage(storeData.store['deposit'][0])" class="btn btn" type="button" name="button">
                 Payment Page <i class="ti ti-arrow-right"></i>
               </button>
+          </span>
+          <span *ngIf="storeData.store['local_banks']&&!storeData.store['local_banks'][0].automatic&&!storeData.store['deposit'][0].proof" class="color">
+              Deposit to our verified bank account and click on payment completed to upload your proof.
           </span>
           <span *ngIf="storeData.store['deposit'][0].proof"
             [class.text-success]="walletService.previewUrl"
@@ -76,51 +78,53 @@
 
         </div>
 
-        <!-- <div *ngIf="storeData.store['local_banks'] as bank">
-          <ul *ngIf="!storeData.store['deposit'][0].proof;else awaitingpaymentConfirmationBlock" class="item-flex-list">
-            <li><span class="text-first">Bank Name:</span> <span>{{ bank[0].bank }}</span></li>
-            <li><span class="text-first">Account No:</span>
-              <span class="">
-                <button (click)="walletService.copyContent(bank[0].account_number)" class="copy-btn btn btn-sm btn-outline-primary text-right" >
-                  <i class="ti ti-copy"></i> Copy
-                </button><br>
-                {{ bank[0].account_number }}
-              </span>
-            </li>
-            <li><span class="text-first">Account Name:</span> <span>{{ bank[0].account_holder }}</span></li>
-          </ul>
-        </div> -->
+          <div *ngIf="storeData.store['local_banks']&&!storeData.store['local_banks'][0].automatic">
+            <div *ngIf="storeData.store['local_banks'] as bank">
+              <ul *ngIf="!storeData.store['deposit'][0].proof;else awaitingpaymentConfirmationBlock" class="item-flex-list">
+                <li><span class="text-first">Bank Name:</span> <span>{{ bank[0].bank }}</span></li>
+                <li><span class="text-first">Account No:</span>
+                  <span class="">
+                    <button (click)="walletService.copyContent(bank[0].account_number)" class="copy-btn btn btn-sm btn-outline-primary text-right" >
+                      <i class="ti ti-copy"></i> Copy
+                    </button><br>
+                    {{ bank[0].account_number }}
+                  </span>
+                </li>
+                <li><span class="text-first">Account Name:</span> <span>{{ bank[0].account_holder }}</span></li>
+              </ul>
+            </div>
 
 
-        <ng-template #awaitingpaymentConfirmationBlock>
-          <ul *ngIf="storeData.store['deposit'][0] as deposit" class="item-flex-list">
-            <li><span class="text-first">Amount:</span> <span>{{ deposit.amount|currencyConverter:true:storeData.store['deposit'][0].method }}</span></li>
-            <li><span class="text-first">Created at:</span><span>{{deposit.timestamp|timeFormat:"fullDate"}}</span></li>
-            <li><span class="text-first">Confirming:</span> <span class="text-deem"> {{deposit.timestamp|countdown:3|async}} </span></li>
-          </ul>
-        </ng-template>
+            <ng-template #awaitingpaymentConfirmationBlock>
+              <ul *ngIf="storeData.store['deposit'][0] as deposit" class="item-flex-list">
+                <li><span class="text-first">Amount:</span> <span>{{ deposit.amount|currencyConverter:true:storeData.store['deposit'][0].method }}</span></li>
+                <li><span class="text-first">Created at:</span><span>{{deposit.timestamp|timeFormat:"fullDate"}}</span></li>
+                <li><span class="text-first">Confirming:</span> <span class="text-deem"> {{deposit.timestamp|countdown:3|async}} </span></li>
+              </ul>
+            </ng-template>
 
-        <!-- <div class="mt-12 text-center" *ngIf="!walletService.previewUrl">
-            Amount to send :<span class="color f-bold">{{storeData.store['deposit'][0].amount|currencyConverter:true:storeData.store['deposit'][0].method}}</span>
-        </div>
+            <div class="mt-12 text-center" *ngIf="!walletService.previewUrl">
+                Amount to send :<span class="color f-bold">{{storeData.store['deposit'][0].amount|currencyConverter:true:storeData.store['deposit'][0].method}}</span>
+            </div>
 
-        <div class="upload-wrapper mb-3 mt-5">
-          <label for="fileInput">
-            <img [src]="walletService.previewUrl || defaultImage" class="upload-preview" alt="Upload image" />
-          </label>
-          <input
-            type="file"
-            id="fileInput"
-            hidden
-            accept="image/*"
-            (change)="walletService.onImageSelected($event)"
-          >
-          <small *ngIf="" class="error"></small>
+            <div class="upload-wrapper mb-3 mt-5">
+              <label for="fileInput">
+                <img [src]="walletService.previewUrl || defaultImage" class="upload-preview" alt="Upload image" />
+              </label>
+              <input
+                type="file"
+                id="fileInput"
+                hidden
+                accept="image/*"
+                (change)="walletService.onImageSelected($event)"
+              >
+              <small *ngIf="" class="error"></small>
 
-        </div> -->
+            </div>
 
-          <!-- <h6 class="text-deem" style="display:flex;justify-content:center" *ngIf="!walletService.previewUrl;else attachSendersNameBlock">Upload Receipt</h6> -->
+              <h6 class="text-deem" style="display:flex;justify-content:center" *ngIf="!walletService.previewUrl;else attachSendersNameBlock">Upload Receipt</h6>
 
+          </div>
           <ng-template #attachSendersNameBlock>
               <div *ngIf="!storeData.store['deposit'][0].proof">
                 <input
@@ -168,13 +172,15 @@
           <qrcode [qrdata]="storeData.store['deposit'][0].extraField.pay_address" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
         </div>
 
-
+       <div class="mt-12 text-center" *ngIf="!walletService.previewUrl">
+            Amount to send :<span class="color f-bold">{{storeData.store['deposit'][0].amount|currencyConverter:true:storeData.store['deposit'][0].method}}</span>
+        </div>
     </div>
 
 
     <!-- 🔹 Deposit Form -->
-    <div class="card">
-      <form *ngIf="!storeData.store['deposit']?.length" [formGroup]="walletService.formView['deposit']" (ngSubmit)="walletService.handleSubmit(walletService.formView['deposit'],'create_deposit')">
+    <div *ngIf="!storeData.store['deposit']?.length" class="card">
+      <form [formGroup]="walletService.formView['deposit']" (ngSubmit)="walletService.handleSubmit(walletService.formView['deposit'],'create_deposit')">
         <div class="deposit-form mt-4">
 
           <div *ngIf="walletService.selectedMode === 'BANK'&&!storeData.store['savedMethod']" class="mb-3">

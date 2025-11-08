@@ -40,4 +40,8 @@ export class QuickNavService {
   copy(item:any){
     copyContent(this.toast,item)
   }
+
+  openTab(url:any){
+    window.open(url, '_blank')
+  }
 }

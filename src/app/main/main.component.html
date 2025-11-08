@@ -1,5 +1,6 @@
 <app-header></app-header>
 <app-spinner></app-spinner>
+<app-quick-notifications *ngIf="quickNav.storeData.get('notification')"></app-quick-notifications>
 
 <div class="space-top container-fluid">
 
@@ -49,7 +50,7 @@
           <span>Help</span>
 
       </div>
-      <div (click)="appManager.installApp()"  data-v-73d89818="" class="item">
+      <div [class.inactive-content]="!quickNav.storeData.get('can_download_app')" (click)="appManager.installApp()"  data-v-73d89818="" class="item">
           <div data-v-73d89818="" class="icon">
               <div data-v-73d89818="" class="kingkong">
                   <div id="style-omNpS" class="style-omNpS"></div>
@@ -62,9 +63,28 @@
       </div>
     </div>
 
-  <app-slider></app-slider>
-  <app-quick-notifications></app-quick-notifications>
+    <app-slider></app-slider>
+
+      <div data-v-1cc70779 data-v-2395076d class="u-notice-bar u-type-none-light-bg snipcss-bqsrZ style-ipoKw" mode="horizontal" id="style-ipoKw">
+        <div data-v-1cc70779 class="u-direction-row">
+            <div data-v-1cc70779 class="u-icon-wrap">
+                <div data-v-a165ad4e data-v-1cc70779 class="u-icon u-left-icon u-icon--right">
+                  <i class="ti ti-volume"></i>
+                    <!-- <div data-v-a165ad4e class="u-icon__icon uicon-volume-fill u-iconfont style-k3LxU" id="style-k3LxU"></div> -->
+                </div>
+            </div>
+            <div (click)="quickNav.openTab(storeData.store['telegramChannel'])" data-v-1cc70779 id="u-notice-box" class="u-notice-box">
+                <div data-v-1cc70779 id="u-notice-content" class="u-notice-content style-Wd7nw">
+                    <p data-v-1cc70779 class="u-notice-text u-type-none style-L7Ss9" id="style-L7Ss9"><span>Innovative financial technology leads the future of wealth. Welcome to FBS!!! Follow our channel for more update. <i class="ti ti-telegram"></i> <strong>Join now</strong> </span></p>
+                </div>
+            </div>
+            <div data-v-1cc70779 class="u-icon-wrap"></div>
+        </div>
+    </div>
+
+  <app-secured *ngIf="quickNav.storeData.store['soccer']"></app-secured>
   <app-upcomming></app-upcomming>
+
 </div>
 
 <app-menu-bottom></app-menu-bottom>

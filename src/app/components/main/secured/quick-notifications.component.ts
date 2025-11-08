@@ -29,7 +29,7 @@ export class QuickNotificationsComponent implements OnInit, OnDestroy {
       this.notifications = this.quickNav.storeData.get('notification').unseen || [];
       if (this.notifications.length) {
         this.currentIndex = 0;
-        this.timer = setTimeout(() =>{this.showNotifications = true; this.showNextNotification()}, 3000);      }
+        this.timer = setTimeout(() =>{this.showNotifications = true; this.showNextNotification()}, 5000);      }
   }
 
   saveUnreadNoti() {

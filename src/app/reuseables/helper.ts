@@ -95,6 +95,8 @@ export function loadExternalScript(URL='https://translate.google.com/translate_a
        .catch(err => {
          console.error('Script load error:', err);
        });
+     }else{
+       addIconToSelect()
      }
    }, 3000); // delay in milliseconds
  }
@@ -118,14 +120,6 @@ export function loadMore(e:any) {
   }
 }
 
-// export function onScroll(event: any,e:any) {
-//   const element = event.target;
-//   const threshold = 5;
-//
-//   if (element.scrollHeight - element.scrollTop - element.clientHeight <= threshold) {
-//     loadMore(e);
-//   }
-// }
 
 export function onScroll(event: any, category: any) {
   const element = event.target as HTMLElement;

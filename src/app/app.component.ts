@@ -10,6 +10,8 @@ import {  loadScript , loadExternalScript} from './reuseables/helper';
 import { SwUpdate } from '@angular/service-worker';
 import { isDevMode } from '@angular/core';
 
+import { AuthService } from './reuseables/auth/auth.service';
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
@@ -20,14 +22,17 @@ export class AppComponent {
   title = 'FBS';
 
   quickNav = inject(QuickNavService);
-  appManager = inject(AppDownloadManager)
+  // appManager = inject(AppDownloadManager)
+  authService = inject(AuthService)
 
   private swUpdate = inject(SwUpdate);
 
   updateAvailable = false;
   private swRegistration: ServiceWorkerRegistration | null = null;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,private appManager: AppDownloadManager) {
+
+
     this.router.events
       .pipe(
         filter((e): e is NavigationEnd => e instanceof NavigationEnd)
@@ -35,10 +40,18 @@ export class AppComponent {
       .subscribe((event: NavigationEnd) => {
         // Find the last navigation event to check trigger type
         const nav = this.router.getCurrentNavigation();
+        const segments = window.location.pathname.split('/');
+        const activePage = segments.pop() || '';
+
         if (nav?.trigger !== 'popstate') {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        this.appManager.showDownload();
+
+        if (["login","register","reset"].includes(activePage)&&this.authService.checkLogin()) {
+          this.authService.router.navigate(['/']); // or '/dashboard'
+        }
+
+        // this.appManager.showDownload();
         loadExternalScript()
 
       });

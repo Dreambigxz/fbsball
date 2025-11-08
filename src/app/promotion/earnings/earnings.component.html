@@ -18,7 +18,7 @@
 
             <div class="wallet-address d-flex align-items-center justify-content-between">
               <code>{{ refLink | truncateCenter:15}}</code>
-              <button (click)="walletService.copyContent(refLink)" class="copy-btn btn btn-sm btn-outline-primary" >
+              <button (click)="quickNav.copy(refLink)" class="copy-btn btn btn-sm btn-outline-primary" >
                 <i class="ti ti-copy"></i> Copy
               </button>
             </div>
@@ -228,6 +228,17 @@
                                           </tr>
                                         </tbody>
                                       </table>
+
+                                      <div *ngIf="!subUsersContent.length" class="empty-state">
+                                        <div class="no-data text-center">
+                                          <img
+                                            src="https://cdn-icons-png.flaticon.com/512/595/595067.png"
+                                            width="60"
+                                            alt="no data"
+                                          />
+                                          <p>No transactions found.</p>
+                                        </div>
+                                      </div>
                                     </div>
                                     </div>
 

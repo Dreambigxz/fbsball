@@ -25,6 +25,7 @@ export class MatchService {
   minimumStake:any=0
   booking_link = ''
   upcomingMatches:any=[]
+  CPG:any=[]
 
   searchTerm = '';
   notStartedMatches:any=[]
@@ -115,9 +116,27 @@ export class MatchService {
     return this.upcomingMatches;
   }
 
+  async companyGame(cpg:any){
+
+    // Attach company games (secured)
+    let ns = await this.notStarted()
+    cpg.forEach((element: any) => {
+      const match = ns.find(
+        (m: any) => m.fixture.fixture.id == element.fixtureID
+      );
+      if (match) {
+        match['secured'] = true;
+        this.CPG.push(match);
+      }
+    });
+
+  }
+
+
   showBetSlip(fixture:any,selected:any){
     let slipEle =document.querySelector(".fixed_footer")
-    slipEle?.classList.add('show')
+    // slipEle?.classList.add('show')
+    this.toggleSlip()
     fixture['selectedScore']=selected
     this.addingFixture=fixture
     !this.minimumStake?[
@@ -192,6 +211,11 @@ export class MatchService {
      m.fixture.league.namme?.toLowerCase().includes(term) ||
      m.fixture.league.country?.toLowerCase().includes(term)
    );
+ }
+
+ isSlipVisible = false;
+ toggleSlip() {
+   this.isSlipVisible = !this.isSlipVisible;
  }
 
 

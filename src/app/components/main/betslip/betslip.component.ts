@@ -24,10 +24,6 @@ export class BetslipComponent {
   amounts = [5, 10, 20, 50, 100];
   selectedAmount: any | null = null;
 
-  isFooterVisible = false;
-  toggleFooter() {
-    this.isFooterVisible = !this.isFooterVisible;
-  }
 
   selectAmount(value: number): void {
     this.selectedAmount = value;
@@ -37,7 +33,6 @@ export class BetslipComponent {
 
 
   }
-
 
 
 }

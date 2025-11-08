@@ -22,13 +22,6 @@ export class RegisterComponent {
   authService = inject(AuthService)
 
   async ngOnInit()   {
-  // Run JS file
-    // loadScript('assets/js/main.js');
-    // loadExternalScript()
-    if (this.authService.checkLogin()) {
-      this.authService.router.navigate(['/']); // or '/dashboard'
-    }
-
     this.authService.setRefCode()
   }
 

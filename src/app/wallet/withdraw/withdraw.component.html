@@ -72,8 +72,8 @@
 
 
     <!-- 🔹 withdraw Form -->
-    <div class="card">
-      <form *ngIf="!storeData.store['withdraw']?.length" [formGroup]="walletService.methodView[walletService.activeForm].form" (ngSubmit)="walletService.handleSubmit(walletService.methodView[walletService.activeForm].form,'create_withdraw')">
+    <div *ngIf="!storeData.store['withdraw']?.length" class="card">
+      <form [formGroup]="walletService.methodView[walletService.activeForm].form" (ngSubmit)="walletService.handleSubmit(walletService.methodView[walletService.activeForm].form,'create_withdraw')">
 
           <div *ngIf="walletService.selectedMode === 'BANK'" class="mb-3">
               <label>Select currency</label>

@@ -9,6 +9,8 @@ import { RequestDataService } from '../http-loader/request-data.service';
 import { ToastService } from '../toast/toast.service';
 
 import { ReactiveFormsModule, FormBuilder, Validators, FormsModule } from '@angular/forms';
+import { Router, NavigationEnd,NavigationStart, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 
 import {  copyContent} from '../helper';
@@ -89,8 +91,16 @@ export class WalletService {
 
   initializedMode=[]
 
-  constructor() {
-    this.initPaymentMethod();
+  constructor(private router: Router) {
+    this.router.events
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+
+        if (!event.urlAfterRedirects.includes('records')) {
+          this.initPaymentMethod();
+        }
+
+      });
   }
 
   /** Initialize the user's payment method from localStorage or default */
@@ -100,6 +110,8 @@ export class WalletService {
     this.paymentMethod$.next(mode);
     this.selectedMode=mode;
     this.page = location.pathname.replaceAll("/wallet/","")
+
+    this.setPaymentMode("","",true)
 
   }
 
@@ -149,6 +161,7 @@ export class WalletService {
   }
 
   setSelectedCurrency(code:string){
+
     let[getSelectedData] = this.initCurrencies.filter((c:any)=>c.code===code)
 
     if (getSelectedData) {

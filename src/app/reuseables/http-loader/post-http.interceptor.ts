@@ -76,7 +76,7 @@ export const PostHttpInterceptor: HttpInterceptorFn = (req, next) => {
     }),
     finalize(() => {
       loaderService.setLoadingButton(null);
-      loaderService.hide();
+      !req.url.includes('hideSpinner')?loaderService.hide():0;
     })
   );
 };

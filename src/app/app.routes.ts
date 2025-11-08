@@ -10,9 +10,14 @@ import { RewardsComponent} from "./promotion/rewards/rewards.component";
 import { InactiveUsersComponent} from "./promotion/inactive-users/inactive-users.component";
 import { ProfileComponent} from "./profile/profile.component";
 import { MatchesComponent} from "./matches/matches.component";
+import {  NotificationsComponent} from "./notifications/notifications.component";
+
 import { LoginComponent} from "./auth/login/login.component";
 import { RegisterComponent} from "./auth/register/register.component";
 import { ResetComponent} from "./auth/reset/reset.component";
+
+import {CreditAgentComponent} from './credit-agent/credit-agent.component'
+import {PaymentConfirmationComponent} from './payment-confirmation/payment-confirmation.component'
 
 import { authGuard } from './reuseables/auth/auth.guard';
 
@@ -29,6 +34,12 @@ export const routes: Routes = [
       path: 'betinfo/:id',
       component: BetinfoComponent,
       title: 'Bet-Info',
+      canActivate: [authGuard]
+    },
+    {
+      path: 'notifications',
+      component: NotificationsComponent,
+      title: 'Notifications',
       canActivate: [authGuard]
     },
 
@@ -87,6 +98,20 @@ export const routes: Routes = [
       component: MatchesComponent,
       title: 'Matches',
       canActivate: [authGuard]
+    },
+    {
+    path: 'confirm-payment',
+    component: PaymentConfirmationComponent,
+    title: 'Confirmation',
+    canActivate: [authGuard]
+
+  },
+  {
+    path: 'credit-agent',
+    component: CreditAgentComponent,
+    title: 'Credit-Agent',
+    canActivate: [authGuard]
+
     },
     {
       path: 'login',

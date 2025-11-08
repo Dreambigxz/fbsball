@@ -60,6 +60,7 @@ export class AuthService {
   invitedBy:any
   RefCode:any
   uplinner:any
+  showPassword=false
 
   private addHours(date: Date, hours: number): Date {
     const newDate = new Date(date);
@@ -193,6 +194,9 @@ export class AuthService {
 
   }
 
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 
 
 }

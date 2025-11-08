@@ -64,7 +64,7 @@
     border-bottom-right-radius: 22px;
 }
 
-uni-text {
+p {
     font-family: RobotoRegular;
 }
 
@@ -76,4 +76,199 @@ img {
 img {
     max-width: 100%;
     height: auto;
+}
+
+
+.u-notice-bar{
+
+  div {
+      display: block;
+  }
+
+  div {
+      font-family: RobotoRegular;
+  }
+
+  div {
+      box-sizing: border-box;
+  }
+
+  [data-v-2395076d] {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: #e5e7eb;
+  }
+
+  div[data-v-2395076d] {
+      font-family: RobotoRegular;
+  }
+
+
+
+
+  [data-v-1cc70779] {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: #e5e7eb;
+  }
+
+  div[data-v-1cc70779] {
+      font-family: RobotoRegular;
+  }
+
+  .u-notice-bar[data-v-1cc70779] {
+      padding: 19px 26px;
+      overflow: hidden;
+  }
+
+  .u-notice-bar[data-v-2395076d] {
+      padding: 19px 26px;
+      overflow: hidden;
+  }
+
+  *,:before,:after {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: #e5e7eb;
+  }
+
+  [data-v-1cc70779],[data-v-1cc70779]:before,[data-v-1cc70779]:after {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: #e5e7eb;
+  }
+
+  [data-v-2395076d],[data-v-2395076d]:before,[data-v-2395076d]:after {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: #e5e7eb;
+  }
+
+  :-webkit-scrollbar {
+      display: none;
+      width: 0!important;
+      height: 0!important;
+      -webkit-appearance: none;
+      background: transparent;
+  }
+
+  .u-direction-row[data-v-1cc70779] {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+  }
+
+  .u-icon-wrap {
+      display: flex;
+      align-items: center;
+  }
+
+  .u-notice-box[data-v-1cc70779] {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      overflow: hidden;
+      margin-left: 13px;
+  }
+
+  [data-v-a165ad4e] {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: #e5e7eb;
+  }
+
+  div[data-v-a165ad4e] {
+      font-family: RobotoRegular;
+  }
+
+  .u-icon[data-v-a165ad4e] {
+      display: inline-flex;
+      align-items: center;
+  }
+
+  .u-icon--right[data-v-a165ad4e] {
+      flex-direction: row;
+      align-items: center;
+  }
+
+  .u-left-icon[data-v-1cc70779] {
+      display: inline-flex;
+      align-items: center;
+  }
+
+  [data-v-a165ad4e],[data-v-a165ad4e]:before,[data-v-a165ad4e]:after {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: #e5e7eb;
+  }
+
+  .u-notice-content[data-v-1cc70779] {
+      -webkit-animation: u-loop-animation-data-v-1cc70779 10s linear infinite both;
+      animation: u-loop-animation-data-v-1cc70779 10s linear infinite both;
+      text-align: right;
+      padding-left: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+  }
+
+  p {
+      font-family: RobotoRegular;
+  }
+
+  p {
+      box-sizing: border-box;
+  }
+
+  p[data-v-1cc70779] {
+      font-family: RobotoRegular;
+  }
+
+  .u-notice-text[data-v-1cc70779] {
+      font-size: 28px;
+      word-break: keep-all;
+      white-space: nowrap;
+  }
+
+}
+
+/* These were inline style tags. Uses id+class to override almost everything */
+#style-ipoKw.style-ipoKw {
+   background: #20152ca3;
+    padding: 19px 26px;
+}
+#style-k3LxU.style-k3LxU {
+   font-size: 37px;
+    font-weight: normal;
+    top: 0px;
+    color: rgba(252, 252, 252, 0.7);
+}
+#u-notice-content.style-Wd7nw {
+   animation-duration: 30.0599s;
+    animation-play-state: running;
+}
+#style-L7Ss9.style-L7Ss9 {
+   color: rgba(252, 252, 252, 0.7);
+    font-size: 31px;
+}
+@keyframes u-loop-animation-data-v-1cc70779 {
+  0% {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      transform: translateZ(0px);
+  }
+  100% {
+      -webkit-transform: translate3d(-100%,0,0);
+      transform: translate3d(-100%,0,0);
+      transform: translate3d(-100%, 0px, 0px);
+  }
+
 }

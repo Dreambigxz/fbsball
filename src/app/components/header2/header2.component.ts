@@ -21,7 +21,7 @@ export class Header2Component {
   router = inject(Router)
 
   goBack(){
-    window.history.go(-1)
+    this.pageName === 'confirm-payment'?this.router.navigate(['/']):window.history.go(-1)
   }
 
   ngOnInit() {
@@ -34,7 +34,6 @@ export class Header2Component {
   }
 
   segments(segments:any){
-
      segments.includes("betinfo")?this.pageName="betinfo": this.pageName=segments.pop() || ''; // 'earnings'
   }
 

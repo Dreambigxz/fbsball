@@ -26,10 +26,29 @@ export class QuickNotificationsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    const segments = window.location.pathname.split('/');
+    const activePage = segments.pop() || '';
+
+    // if (!this.quickNav.storeData.get('notification')) {
+    //   this.quickNav.storeData.set('total_read',0)
+    //   this.quickNav.reqServerData.get('notifications?hideSpinner&type=unseen&dir='+activePage).subscribe({
+    //     next: (res) => {
+    //       this.notifications = this.quickNav.storeData.get('notification').unseen || [];
+    //       if (this.notifications.length) {
+    //         this.timer = setTimeout(() =>{this.showNotifications = true; this.showNextNotification()}, 2000);
+    //       }
+    //     }
+    //   });
+    // }
+    // else {
+      console.log('storeData>>EXIST', this.quickNav.storeData);
+
       this.notifications = this.quickNav.storeData.get('notification').unseen || [];
       if (this.notifications.length) {
         this.currentIndex = 0;
-        this.timer = setTimeout(() =>{this.showNotifications = true; this.showNextNotification()}, 3000);      }
+        this.timer = setTimeout(() =>{this.showNotifications = true; this.showNextNotification()}, 5000);      }
+    // }
+
   }
 
   saveUnreadNoti() {
