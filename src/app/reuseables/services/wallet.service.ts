@@ -111,7 +111,7 @@ export class WalletService {
     this.selectedMode=mode;
     this.page = location.pathname.replaceAll("/wallet/","")
 
-    this.setPaymentMode("","",true)
+     this.storeData.get('wallet')?this.setPaymentMode("","",true):0;
 
   }
 
