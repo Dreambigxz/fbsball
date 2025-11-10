@@ -15,5 +15,8 @@
     <div class="text-main " (click)="router.navigate(['promotions','rewards'])" *ngIf="['earnings'].includes(pageName)" class="records grid">
         <p class="text-deem"><i class="ti ti-gift"></i>rewards <i class="ti ti-arrow-up-right"></i></p>
     </div>
+    <div class="text-main " (click)="router.navigate(['promotions','earnings'])" *ngIf="['rewards'].includes(pageName)" class="records grid">
+        <p class="text-deem"><i class="ti ti-users"></i>Teams Earning <i class="ti ti-arrow-up-right"></i></p>
+    </div>
 
 </div>

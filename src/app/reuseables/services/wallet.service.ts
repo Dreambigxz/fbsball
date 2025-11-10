@@ -111,7 +111,7 @@ export class WalletService {
     this.selectedMode=mode;
     this.page = location.pathname.replaceAll("/wallet/","")
 
-     this.storeData.get('wallet')?this.setPaymentMode("","",true):0;
+     this.storeData.get('wallet')&&this.storeData.get(this.page)?this.setPaymentMode("","",true):0;
 
   }
 
@@ -120,8 +120,11 @@ export class WalletService {
 
     method=this.storeData.get('hasMethod')?.code
 
+    const pageData = this.storeData.get(this.page)
+    console.log({pageData});
+
     if (!mode) {
-      mode = this.storeData.get('hasMethod')?.code || this.storeData.get(this.page)[0]?.method || this.selectedMode
+      mode = this.storeData.get('hasMethod')?.code || pageData[0]?.method || this.selectedMode
       if (!['TRON',"USD"].includes(mode)) {
         mode="BANK"
       }

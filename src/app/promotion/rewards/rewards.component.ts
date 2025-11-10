@@ -24,10 +24,7 @@ export class RewardsComponent {
 
   ngOnInit(){
       this.storeData.store['pageDetails']='promotions'
-      if (!this.storeData.get('invite-rewards')) {this.reqServerData.get("invite-rewards?showSpinner").subscribe(
-        (res)=>{console.log({res});
-        }
-      )}
+      if (!this.storeData.get('invite-rewards')) {this.reqServerData.get("invite-rewards?showSpinner").subscribe()}
   }
 
 }
