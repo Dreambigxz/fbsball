@@ -87,4 +87,13 @@
 
 </div>
 
+<a *ngIf="storeData.store['telegramChannel']"
+  [href]="storeData.store['telegramChannel']"
+  target="_blank"
+  class="telegram-float"
+  aria-label="Chat with us on Telegram"
+>
+  <i class="ti ti-brand-telegram"></i>
+</a>
+
 <app-menu-bottom></app-menu-bottom>

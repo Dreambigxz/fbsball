@@ -55,7 +55,6 @@ export class AppComponent {
         loadExternalScript()
 
         let total_read = this.quickNav.storeData.get('total_read')
-        console.log({total_read});
 
         if (this.quickNav.storeData.get('total_read')) {
           this.quickNav.reqServerData.post('notifications/?hideSpinner', {total_read:this.quickNav.storeData.get('total_read'),processor:'save_read'}).subscribe()

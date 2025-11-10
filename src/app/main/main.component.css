@@ -272,3 +272,31 @@ img {
   }
 
 }
+
+.telegram-float {
+  position: fixed;
+  bottom: 90px;
+  right:  20px;
+  z-index: 1000;
+  width: 45px;
+  height: 45px;
+  background-color: #0088cc; /* Telegram blue */
+  border-radius: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 28px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.telegram-float:hover {
+  background-color: #007ab8;
+  transform: scale(1.1);
+}
+
+.telegram-float i {
+  color: white;
+}
