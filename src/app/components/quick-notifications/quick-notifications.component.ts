@@ -39,10 +39,28 @@ export class QuickNotificationsComponent implements OnInit, OnDestroy {
   })}
 
   showNextNotification() {
+
+    console.log('show noti><<');
+
+
+    const noti = this.quickNav.storeData.get('notification')
+    if (!noti.seen) {
+      noti.seen= [ ]
+    };
+    if (!this.quickNav.storeData.has('total_read')) {
+      this.quickNav.storeData.set('total_read',0)
+    }
+
     if (!this.notifications.length) {this.close();return};
     this.currentNotification = this.notifications[this.currentIndex];
 
-    this.quickNav.storeData.get('notification').unseen.pop(this.currentIndex)
+    // this.quickNav.storeData.get('notification').unseen.pop(this.currentIndex)
+    let read = noti.unseen.pop(this.currentIndex)//this.quickNav.storeData.get('notification').unseen.pop(this.currentIndex)
+    noti.seen.push(read)
+
+    // console.log({noti});
+    // console.log('total_read>>', this.quickNav.storeData.store['total_read']);
+
     this.quickNav.storeData.store['total_read']+=1
     this.currentIndex = (this.currentIndex + 1) % this.notifications.length;
 

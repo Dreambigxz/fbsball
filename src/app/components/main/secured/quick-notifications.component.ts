@@ -29,7 +29,8 @@ export class QuickNotificationsComponent implements OnInit, OnDestroy {
       this.notifications = this.quickNav.storeData.get('notification').unseen || [];
       if (this.notifications.length) {
         this.currentIndex = 0;
-        this.timer = setTimeout(() =>{this.showNotifications = true; this.showNextNotification()}, 5000);      }
+        this.timer = setTimeout(() =>{this.showNotifications = true; this.showNextNotification()}, 5000);
+      }
   }
 
   saveUnreadNoti() {
@@ -39,14 +40,29 @@ export class QuickNotificationsComponent implements OnInit, OnDestroy {
   })}
 
   showNextNotification() {
+
+    console.log('show noti><<');
+
+
+    const noti = this.quickNav.storeData.get('notification')
+    if (!noti.seen) {
+      noti.seen= [ ]
+    }
     if (!this.notifications.length) {this.close();return};
     this.currentNotification = this.notifications[this.currentIndex];
 
-    this.quickNav.storeData.get('notification').unseen.pop(this.currentIndex)
+    let read = noti.unseen.pop(this.currentIndex)//this.quickNav.storeData.get('notification').unseen.pop(this.currentIndex)
+    noti.seen.push(read)
+
+    console.log({noti});
+
+
     this.quickNav.storeData.store['total_read']+=1
     this.currentIndex = (this.currentIndex + 1) % this.notifications.length;
 
+
     this.timer = setTimeout(() => this.showNextNotification(), 6000);
+
   }
 
   close() {
