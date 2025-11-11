@@ -48,8 +48,8 @@
             </div> -->
 
             <div *ngIf="quickNav.storeData.store['betDir']?.records as records">
-              <li><span class="text-first">Betting Profit:</span> <span>{{ records.true.won.amount|currencyConverter:true }} - ({{(records.true.won.count)}})</span></li>
-              <li><span class="text-first">Betting Lost:</span><span class="text-danger">{{ records.false.won.amount|currencyConverter:true  }} - ({{((records.false.won.count))}})</span></li>
+              <li><span class="text-first">Betting Profit:</span> <span>{{ records.true?.won?.amount|currencyConverter:true }} - ({{(records.true?.won.count)}})</span></li>
+              <li><span class="text-first">Betting Lost:</span><span class="text-danger">{{ records.false?.won?.amount|currencyConverter:true  }} - ({{((records.false?.won.count))}})</span></li>
 
             </div>
 
