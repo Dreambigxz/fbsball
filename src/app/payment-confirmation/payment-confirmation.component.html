@@ -5,12 +5,13 @@
 	<div class="space-top container-fluid">
 
 
-    <ng-template >
+    <!-- <ng-template > -->
       <h2 class="title">Amount : {{currencySymbol}}{{totalAmount|number}} ~ <span class="text-info">${{totalAmountDollar|number}}</span></h2>
 
       <p></p>
       <div *ngIf="directory==='Withdraw'" class="withdraw">
 
+				<!-- <p>Withdraw View </p> -->
         <div style="border-radius:15px" *ngFor="let tra of transaction;let i = index" class="bg-dark">
 						<!-- <div *ngIf="tra.method!=='EGP'||tra.method==='EGP'&&tra.amount<=5000||username==='admin'"> -->
 								<div  *ngIf="!['success','declined'].includes(tra.status)" class="container">
@@ -159,6 +160,6 @@
 
       </div>
 
-    </ng-template>
+    <!-- </ng-template> -->
 
   </div>
