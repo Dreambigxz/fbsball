@@ -54,7 +54,7 @@ export class WalletService {
         account_number: ['', [Validators.required]],
         account_holder: [''],
         bank: [''],
-        verification_code: ['', [Validators.required]],
+        // verification_code: ['', [Validators.required]],
         origin:[""],
 
       }),
@@ -67,7 +67,7 @@ export class WalletService {
         account_number: ['', [Validators.required]],
         account_holder: ['', [Validators.required]],
         bank: ['', [Validators.required]],
-        verification_code: ['', [Validators.required]],
+        // verification_code: ['', [Validators.required]],
         origin:[""],
       }),
       step:1
