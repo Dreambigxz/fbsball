@@ -8,8 +8,8 @@
     <h5  class="ps-4 header-title">{{pageName}}</h5>
     <div *ngIf="storeData.store['wallet'] as walletData" class="balance text-green notranslate">{{walletData.init_currency.symbol}}<span class="bal___display">{{walletData.balance.new|currencyConverter|number:"1.2-2"}}</span>
     </div>
-    <br>
-    <div class="text-main " (click)="router.navigate(['wallet','records'])" *ngIf="['deposit', 'withdraw'].includes(pageName)" class="records grid">
+    <!-- <br> -->
+    <!-- <div class="text-main " (click)="router.navigate(['wallet','records'])" *ngIf="['deposit', 'withdraw'].includes(pageName)" class="records grid">
         <p class="text-deem"><i class="ti ti-history"></i>records <i class="ti ti-arrow-up-right"></i></p>
     </div>
     <div class="text-main " (click)="router.navigate(['promotions','rewards'])" *ngIf="['earnings'].includes(pageName)" class="records grid">
@@ -17,6 +17,6 @@
     </div>
     <div class="text-main " (click)="router.navigate(['promotions','earnings'])" *ngIf="['rewards'].includes(pageName)" class="records grid">
         <p class="text-deem"><i class="ti ti-users"></i>Teams Earning <i class="ti ti-arrow-up-right"></i></p>
-    </div>
+    </div> -->
 
 </div>
